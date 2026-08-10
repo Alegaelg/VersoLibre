@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VersoLibre</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+        rel="stylesheet">
+
+    <link rel="icon" type="image/jpg" href="VersoLibre.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ========================= -->
+<!-- PANTALLA DE LOGIN -->
+<!-- ========================= -->
+
+
+<section id="pantalla-login">
+
+    <div class="login-contenido">
+
+        <h1>Mis Escritos</h1>
+
+        <p id="texto-login">
+            Entra a tu portafolio
+        </p>
+
+
+        <!-- LOGIN -->
+
+        <form id="form-login">
+
+            <div class="campo-login">
+
+                <label for="usuario">
+                    Correo electrónico
+                </label>
+
+                <input
+                    type="email"
+                    id="usuario"
+                    placeholder="tucorreo@email.com"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo-login">
+
+                <label for="contrasena">
+                    Contraseña
+                </label>
+
+                <input
+                    type="password"
+                    id="contrasena"
+                    placeholder="Tu contraseña"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="btn-login"
+            >
+                Iniciar sesión
+            </button>
+
+
+            <p id="mensaje-login"></p>
+
+        </form>
+
+
+        <!-- REGISTRO -->
+
+        <div id="registro-login">
+
+            <p>
+                ¿No tienes una cuenta?
+            </p>
+
+            <button
+                type="button"
+                id="btn-mostrar-registro"
+            >
+                Crear cuenta
+            </button>
+
+        </div>
+
+
+        <!-- FORMULARIO DE REGISTRO -->
+
+        <form
+            id="form-registro"
+            style="display: none;"
+        >
+
+            <div class="campo-login">
+
+                <label for="registro-email">
+                    Correo electrónico
+                </label>
+
+                <input
+                    type="email"
+                    id="registro-email"
+                    placeholder="tucorreo@email.com"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo-login">
+
+                <label for="registro-contrasena">
+                    Contraseña
+                </label>
+
+                <input
+                    type="password"
+                    id="registro-contrasena"
+                    placeholder="Crea una contraseña"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="btn-registro"
+            >
+                Crear cuenta
+            </button>
+
+
+            <p id="mensaje-registro"></p>
+
+
+            <button
+                type="button"
+                id="btn-volver-login"
+            >
+                Ya tengo una cuenta
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+
+    <!-- ========================= -->
+    <!-- PORTAFOLIO -->
+    <!-- ========================= -->
+
+    <section id="pantalla-portafolio" class="pantalla-portafolio">
+
+        <!-- ENCABEZADO -->
+
+        <header class="header">
+
+            <div class="header-contenido">
+
+                <div class="saludo-usuario">
+
+                <div class="saludo-foto">
+
+                    <img
+                        id="header-foto-perfil"
+                        alt="Foto de perfil"
+                    >
+
+                    <div
+                        id="header-foto-placeholder"
+                        class="header-foto-placeholder"
+                    >
+                        👤
+                    </div>
+
+                </div>
+
+
+                <div class="saludo-texto">
+
+                    <p>
+                        Bienvenido de nuevo,
+                    </p>
+
+                    <h1 id="header-nombre-autor">
+                        Autor
+                    </h1>
+
+                </div>
+
+</div>
+
+
+                <div class="buscador">
+
+                    <input
+                        type="text"
+                        id="buscador"
+                        placeholder="Buscar un escrito..."
+                    >
+
+                </div>
+
+                <button
+                    id="btn-mi-cuenta"
+                    class="btn-mi-cuenta"
+                    type="button"
+                >
+                    👤 Mi cuenta
+                </button>
+
+
+                <button
+                    id="btn-cerrar-sesion"
+                    class="btn-cerrar-sesion"
+                >
+                    Cerrar sesión
+                </button>
+
+                
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <main class="contenido">
+
+            <!-- SECCIÓN SUPERIOR -->
+
+            <section class="acciones">
+
+                <div class="titulo-seccion">
+
+                    <h2>Mis textos en VersoLibre</h2>
+
+                    <span id="contador-escritos">
+                        0 escritos
+                    </span>
+
+                </div>
+
+                <div class="acciones-escritos">
+
+                    <button
+                        id="btn-nuevo-escrito"
+                        class="btn-nuevo-escrito"
+                        type="button"
+                    >
+                        ✍️ Nuevo escrito
+                    </button>
+
+                    <button
+                        id="btn-subir"
+                        class="btn-subir"
+                        type="button"
+                    >
+                        + Subir escrito
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- LISTA DE ESCRITOS -->
+
+            <section
+                id="lista-escritos"
+                class="lista-escritos"
+            >
+
+                <!--
+                    Los escritos aparecerán aquí
+                    mediante JavaScript.
+                -->
+
+            </section>
+
+
+
+            <!-- MENSAJE CUANDO NO HAY ESCRITOS -->
+
+            <section
+                id="sin-escritos"
+                class="sin-escritos"
+            >
+
+                <div class="sin-escritos-icono">
+                    📖
+                </div>
+
+                <h3>Aún no tienes textos</h3>
+
+                <p>
+                    Sube tu primer poema o texto
+                    para comenzar tu colección.
+                </p>
+
+                <button
+                    id="btn-subir-vacio"
+                    class="btn-subir"
+                >
+                    + Subir mi primer texto
+                </button>
+
+            </section>
+
+        </main>
+
+
+
+        <!-- ========================= -->
+        <!-- MODAL SUBIR ESCRITO -->
+        <!-- ========================= -->
+
+        <div
+            id="modal-subir"
+            class="modal"
+        >
+
+            <div class="modal-contenido">
+
+                <button
+                    id="cerrar-modal"
+                    class="cerrar-modal"
+                    type="button"
+                >
+                    &times;
+                </button>
+
+
+                <h2>Subir escrito</h2>
+
+                <p>
+                    Selecciona un archivo para agregarlo
+                    a tu colección.
+                </p>
+
+
+                <label
+                    for="archivo"
+                    class="selector-archivo"
+                >
+
+                    <span>📄</span>
+
+                    <strong>
+                        Seleccionar archivo
+                    </strong>
+
+                    <small>
+                        Solo se permiten archivos .txt y .docx
+                    </small>
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="archivo"
+                    accept=".txt,.docx"
+                >
+
+
+                <div
+                    class="archivo-seleccionado"
+                    id="archivo-seleccionado"
+                >
+                    Ningún archivo seleccionado
+                </div>
+
+
+                <button
+                    id="btn-confirmar-subida"
+                    class="btn-confirmar"
+                    type="button"
+                >
+                    Subir escrito
+                </button>
+
+            </div>
+
+        </div>
+
+
+<!-- ========================= -->
+<!-- MODAL PARA LEER ESCRITO -->
+<!-- ========================= -->
+
+<div
+    id="modal-lectura"
+    class="modal"
+>
+
+    <div
+        class="modal-contenido modal-lectura-contenido"
+    >
+
+        <button
+            id="cerrar-lectura"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <div class="lectura-header">
+
+            <h2 id="titulo-lectura">
+                Título del escrito
+            </h2>
+
+            <div class="autor-compartido">
+
+            <div class="autor-foto-contenedor">
+
+                <img
+                    id="autor-foto"
+                    class="autor-foto"
+                    src=""
+                    alt="Foto del autor"
+                >
+
+                <div
+                    id="autor-foto-placeholder"
+                    class="autor-foto-placeholder"
+                >
+                    👤
+                </div>
+
+            </div>
+
+
+            <div class="autor-info">
+
+                <strong id="autor-nombre">
+                    Autor
+                </strong>
+
+                <p id="autor-descripcion">
+                </p>
+
+            </div>
+
+        </div>
+
+            <span id="fecha-lectura">
+                Fecha
+            </span>
+
+        </div>
+
+
+        <div
+            id="texto-lectura"
+            class="texto-lectura"
+        >
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================= -->
+<!-- MODAL PARA EDITAR ESCRITO -->
+<!-- ========================= -->
+
+<div
+    id="modal-editar"
+    class="modal"
+>
+
+    <div class="modal-contenido modal-editar-contenido">
+
+        <button
+            id="cerrar-editar"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <h2>Editar escrito</h2>
+
+        <p>
+            Puedes modificar el título y el contenido
+            de tu escrito.
+        </p>
+
+
+        <div class="campo">
+
+            <label for="titulo-editar">
+                Título
+            </label>
+
+            <input
+                type="text"
+                id="titulo-editar"
+                placeholder="Título del escrito"
+            >
+
+        </div>
+
+
+        <div class="campo campo-contenido">
+
+            <label for="contenido-editar">
+                Contenido
+            </label>
+
+            <textarea
+                id="contenido-editar"
+                placeholder="Escribe aquí tu poema o texto..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            id="btn-guardar-edicion"
+            class="btn-confirmar"
+            type="button"
+        >
+            Guardar cambios
+        </button>
+
+        <div class="cuenta-opciones">
+
+
+</div>
+
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- MODAL COMPARTIR -->
+<!-- ========================= -->
+
+<div id="modal-compartir" class="modal">
+
+    <div class="modal-contenido modal-compartir-contenido">
+
+        <button
+            id="cerrar-compartir"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+        <h2>Compartir escrito</h2>
+
+        <p id="nombre-compartir">
+            Nombre del escrito
+        </p>
+
+
+        <div class="opciones-compartir">
+
+            <button
+                id="opcion-publico"
+                class="opcion-compartir"
+                type="button"
+            >
+
+                <span>🌎</span>
+
+                <div>
+                    <strong>Público</strong>
+
+                    <small>
+                        Cualquiera con el enlace
+                        puede verlo.
+                    </small>
+                </div>
+
+            </button>
+
+
+            <button
+                id="opcion-privado"
+                class="opcion-compartir"
+                type="button"
+            >
+
+                <span>🔒</span>
+
+                <div>
+                    <strong>Privado</strong>
+
+                    <small>
+                        Se requiere iniciar sesión
+                        para verlo.
+                    </small>
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="resultado-compartir"
+            class="resultado-compartir"
+            style="display: none;"
+        >
+
+            <label for="link-compartir">
+                Enlace del escrito
+            </label>
+
+            <div class="contenedor-link">
+
+                <input
+                    type="text"
+                    id="link-compartir"
+                    readonly
+                >
+
+                <button
+                    id="copiar-link"
+                    type="button"
+                >
+                    Copiar
+                </button>
+
+            </div>
+
+            <p id="estado-compartir"></p>
+
+             <button
+            id="dejar-de-compartir"
+            class="btn-dejar-de-compartir"
+            type="button"
+        >
+            🔒 Dejar de compartir
+        </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div
+    id="modal-cuenta"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="modal-contenido modal-cuenta-contenido">
+
+        <button
+            id="cerrar-cuenta"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <div class="cuenta-header">
+
+            <div class="foto-perfil-contenedor">
+
+                <img
+                    id="foto-perfil"
+                    class="foto-perfil"
+                    src=""
+                    alt="Foto de perfil"
+                >
+
+                <div
+                    id="foto-perfil-placeholder"
+                    class="foto-perfil-placeholder"
+                >
+                    👤
+                </div>
+
+            </div>
+
+
+            <label
+                for="input-foto-perfil"
+                class="btn-cambiar-foto"
+            >
+                📷 Cambiar foto
+            </label>
+
+            <input
+                type="file"
+                id="input-foto-perfil"
+                accept="image/png,image/jpeg,image/webp"
+            >
+
+        </div>
+
+
+        <div class="cuenta-info">
+
+            <div class="cuenta-dato">
+
+                <span class="cuenta-etiqueta">
+                    Correo electrónico
+                </span>
+
+                <strong id="cuenta-correo">
+                    Cargando...
+                </strong>
+
+            </div>
+
+
+            <div class="cuenta-dato">
+
+                <span class="cuenta-etiqueta">
+                    Contraseña
+                </span>
+
+                <div class="cuenta-contrasena">
+
+                    <strong>
+                        ••••••••••
+                    </strong>
+
+                    <button
+                        id="btn-cambiar-contrasena"
+                        type="button"
+                    >
+                        Cambiar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="cuenta-dato">
+
+                <span class="cuenta-etiqueta">
+                    Fecha de creación
+                </span>
+
+                <strong id="cuenta-fecha">
+                    Cargando...
+                </strong>
+
+            </div>
+
+
+            <div class="cuenta-dato">
+
+                <span class="cuenta-etiqueta">
+                    Escritos
+                </span>
+
+                <strong id="cuenta-cantidad-escritos">
+                    0 escritos
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="cuenta-descripcion">
+
+            <label for="cuenta-nombre-autor">
+                Nombre de autor
+            </label>
+
+            <input
+                type="text"
+                id="cuenta-nombre-autor"
+                placeholder="Este sera el nombre que aparecerá en tu perfil. (Como tu user de ig)"
+                maxlength="60"
+            >
+
+        </div>
+
+        <div class="cuenta-descripcion">
+
+        <label for="cuenta-username">
+            Nombre de usuario
+        </label>
+
+        <input
+            type="text"
+            id="cuenta-username"
+            placeholder="este sera el nombre que se verá en el enlace al compartir tu perfil. Sé formal!"
+            maxlength="30"
+        >
+
+        <small class="texto-ayuda-username">
+            Se usará en el enlace de tu perfil público.
+        </small>
+
+    </div>
+
+
+        <div class="cuenta-descripcion">
+
+            <label for="cuenta-descripcion">
+                Sobre mí
+            </label>
+
+            <textarea
+                id="cuenta-descripcion"
+                placeholder="Escribe una pequeña descripción sobre ti..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            id="btn-guardar-cuenta"
+            class="btn-confirmar"
+            type="button"
+        >
+            Guardar cambios
+        </button>
+
+        <button
+            id="btn-agregar-cuenta"
+            class="btn-agregar-cuenta"
+            type="button"
+        >
+            ➕ Agregar otra cuenta
+        </button>
+
+
+        <button
+            id="btn-eliminar-cuenta"
+            class="btn-eliminar-cuenta"
+            type="button"
+        >
+            🗑 Eliminar cuenta
+        </button>
+
+    </div>
+
+</div>
+
+<div
+    id="modal-contrasena"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="modal-contenido modal-contrasena-contenido">
+
+        <button
+            id="cerrar-contrasena"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <h2>Cambiar contraseña</h2>
+
+        <p>
+            Escribe tu nueva contraseña
+            y confírmala.
+        </p>
+
+
+        <div class="campo">
+
+            <label for="nueva-contrasena">
+                Nueva contraseña
+            </label>
+
+            <input
+                type="password"
+                id="nueva-contrasena"
+                placeholder="Nueva contraseña"
+            >
+
+        </div>
+
+
+        <div class="campo campo-confirmar-contrasena">
+
+            <label for="confirmar-contrasena">
+                Confirmar contraseña
+            </label>
+
+            <input
+                type="password"
+                id="confirmar-contrasena"
+                placeholder="Repite la contraseña"
+            >
+
+        </div>
+
+
+        <p
+            id="mensaje-contrasena"
+            class="mensaje-contrasena"
+        ></p>
+
+
+        <button
+            id="btn-guardar-contrasena"
+            class="btn-confirmar"
+            type="button"
+        >
+            Cambiar contraseña
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ================================= -->
+<!-- PERFIL PÚBLICO DEL AUTOR -->
+<!-- ================================= -->
+
+<div
+    id="modal-perfil-publico"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="modal-contenido perfil-publico-contenido">
+
+        <button
+            id="cerrar-perfil-publico"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <div class="perfil-publico-header">
+
+            <div class="perfil-publico-foto-contenedor">
+
+                <img
+                    id="perfil-publico-foto"
+                    src=""
+                    alt="Foto del autor"
+                >
+
+                <div
+                    id="perfil-publico-placeholder"
+                    class="perfil-publico-placeholder"
+                >
+                    👤
+                </div>
+
+            </div>
+
+
+            <h2 id="perfil-publico-nombre">
+                Autor
+            </h2>
+
+
+            <p id="perfil-publico-descripcion">
+            </p>
+
+
+            <span id="perfil-publico-contador">
+                0 escritos públicos
+            </span>
+
+            <button
+                id="copiar-perfil-publico"
+                class="btn-copiar-perfil-publico"
+                type="button"
+            >
+                🔗 Copiar perfil
+            </button>
+
+        </div>
+
+
+        <div
+            id="perfil-publico-escritos"
+            class="perfil-publico-escritos"
+        >
+        </div>
+
+
+        <div
+            id="perfil-publico-vacio"
+            class="perfil-publico-vacio"
+            style="display: none;"
+        >
+
+            Este autor todavía no tiene
+            escritos públicos.
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ================================= -->
+<!-- ELEGIR CUENTA -->
+<!-- ================================= -->
+
+<div
+    id="modal-elegir-cuenta"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="modal-contenido modal-elegir-cuenta-contenido">
+
+        <button
+            id="cerrar-elegir-cuenta"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <h2>Elegir cuenta</h2>
+
+        <p>
+            Selecciona una cuenta guardada
+            en este dispositivo.
+        </p>
+
+
+        <div
+            id="lista-cuentas"
+            class="lista-cuentas"
+        >
+        </div>
+
+
+        <button
+            id="btn-nueva-cuenta"
+            class="btn-nueva-cuenta"
+            type="button"
+        >
+            ＋ Agregar otra cuenta
+        </button>
+
+    </div>
+
+</div>
+
+        <!-- ================================= -->
+<!-- CREAR NUEVO ESCRITO -->
+<!-- ================================= -->
+
+<div
+    id="modal-nuevo-escrito"
+    class="modal modal-editor"
+    style="display: none;"
+>
+
+    <div class="editor-escrito-contenedor">
+
+        <!-- ================================= -->
+        <!-- CABECERA -->
+        <!-- ================================= -->
+
+        <header class="editor-cabecera">
+
+            <div class="editor-cabecera-izquierda">
+
+                <button
+                    id="cerrar-nuevo-escrito"
+                    class="editor-volver"
+                    type="button"
+                    title="Cerrar editor"
+                >
+                    ←
+                </button>
+
+                <div>
+
+                    <h2>
+                        Nuevo escrito
+                    </h2>
+
+                    <p id="estado-editor">
+                        Sin guardar
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="editor-cabecera-acciones">
+
+                <button
+                    id="btn-descargar-escrito"
+                    class="btn-editor-secundario"
+                    type="button"
+                >
+                    ↓ Descargar
+                </button>
+
+                <button
+                    id="btn-guardar-nuevo-escrito"
+                    class="btn-editor-principal"
+                    type="button"
+                >
+                    Guardar escrito
+                </button>
+
+                <button
+                    id="btn-eliminar-borrador"
+                    class="btn-editor-peligro"
+                    type="button"
+                >
+                    🗑 Eliminar borrador
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================================= -->
+        <!-- ÁREA DE ESCRITURA -->
+        <!-- ================================= -->
+
+        <main class="editor-area">
+
+            <div class="hoja-editor">
+
+                <input
+                    type="text"
+                    id="nuevo-escrito-titulo"
+                    class="nuevo-escrito-titulo"
+                    placeholder="Título de tu escrito"
+                    maxlength="200"
+                >
+
+
+                <!-- QUILL -->
+
+                <div id="toolbar-nuevo-escrito">
+
+                    <span class="ql-formats">
+
+                        <select class="ql-header">
+
+                            <option
+                                selected
+                            ></option>
+
+                            <option value="1">
+                                Título
+                            </option>
+
+                            <option value="2">
+                                Subtítulo
+                            </option>
+
+                            <option value="3">
+                                Encabezado
+                            </option>
+
+                        </select>
+
+                    </span>
+
+
+                    <span class="ql-formats">
+
+                        <button class="ql-bold"></button>
+
+                        <button class="ql-italic"></button>
+
+                        <button class="ql-underline"></button>
+
+                        <button class="ql-strike"></button>
+
+                    </span>
+
+
+                    <span class="ql-formats">
+
+                        <select class="ql-color"></select>
+
+                        <select class="ql-background"></select>
+
+                    </span>
+
+
+                    <span class="ql-formats">
+
+                        <select class="ql-align"></select>
+
+                    </span>
+
+
+                    <span class="ql-formats">
+
+                        <button
+                            class="ql-list"
+                            value="ordered"
+                        ></button>
+
+                        <button
+                            class="ql-list"
+                            value="bullet"
+                        ></button>
+
+                        <button
+                            class="ql-blockquote"
+                        ></button>
+
+                    </span>
+
+
+                    <span class="ql-formats">
+
+                        <button class="ql-clean"></button>
+
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="editor-nuevo-escrito"
+                    class="editor-nuevo-escrito"
+                >
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- ================================= -->
+        <!-- PIE DEL EDITOR -->
+        <!-- ================================= -->
+
+        <footer class="editor-pie">
+
+            <span id="contador-palabras-editor">
+                0 palabras
+            </span>
+
+            <span id="contador-caracteres-editor">
+                0 caracteres
+            </span>
+
+        </footer>
+
+    </div>
+
+</div>
+
+        <!-- ================================= -->
+<!-- GUARDAR NUEVO ESCRITO -->
+<!-- ================================= -->
+
+<div
+    id="modal-formato-guardar"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="modal-contenido modal-formato-contenido">
+
+        <button
+            id="cerrar-formato-guardar"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <h2>
+            Guardar escrito
+        </h2>
+
+
+        <p>
+            Elige cómo quieres guardar
+            este escrito en tu portafolio.
+        </p>
+
+
+        <div class="opciones-formato">
+
+            <button
+                id="guardar-como-txt"
+                class="opcion-formato"
+                type="button"
+            >
+
+                <span class="opcion-formato-icono">
+                    📄
+                </span>
+
+                <div>
+
+                    <strong>
+                        TXT
+                    </strong>
+
+                    <small>
+                        Archivo de texto simple.
+                    </small>
+
+                </div>
+
+            </button>
+
+
+            <button
+                id="guardar-como-docx"
+                class="opcion-formato"
+                type="button"
+            >
+
+                <span class="opcion-formato-icono">
+                    📝
+                </span>
+
+                <div>
+
+                    <strong>
+                        DOCX
+                    </strong>
+
+                    <small>
+                        Documento compatible con Word.
+                    </small>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <!-- ================================= -->
+<!-- DESCARGAR ESCRITO -->
+<!-- ================================= -->
+
+<div
+    id="modal-descargar-escrito"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="modal-contenido modal-formato-contenido">
+
+        <button
+            id="cerrar-descargar-escrito"
+            class="cerrar-modal"
+            type="button"
+        >
+            &times;
+        </button>
+
+
+        <h2>
+            Descargar escrito
+        </h2>
+
+
+        <p>
+            Elige el formato de la copia
+            que quieres guardar en tu dispositivo.
+        </p>
+
+
+        <div class="opciones-formato">
+
+            <button
+                id="descargar-como-txt"
+                class="opcion-formato"
+                type="button"
+            >
+
+                <span class="opcion-formato-icono">
+                    📄
+                </span>
+
+                <div>
+
+                    <strong>
+                        Descargar TXT
+                    </strong>
+
+                    <small>
+                        Texto simple.
+                    </small>
+
+                </div>
+
+            </button>
+
+
+            <button
+                id="descargar-como-docx"
+                class="opcion-formato"
+                type="button"
+            >
+
+                <span class="opcion-formato-icono">
+                    📝
+                </span>
+
+                <div>
+
+                    <strong>
+                        Descargar DOCX
+                    </strong>
+
+                    <small>
+                        Documento de Word.
+                    </small>
+
+                </div>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <!-- ================================= -->
+<!-- POPUP PERSONALIZADO -->
+<!-- ================================= -->
+
+<div
+    id="modal-popup"
+    class="modal"
+    style="display: none;"
+>
+
+    <div class="popup-contenido">
+
+        <div
+            id="popup-icono"
+            class="popup-icono"
+        >
+            ⚠️
+        </div>
+
+
+        <h2 id="popup-titulo">
+            Confirmar acción
+        </h2>
+
+
+        <p id="popup-mensaje">
+            ¿Estás seguro?
+        </p>
+
+
+        <div
+            id="popup-campo-contenedor"
+            class="popup-campo-contenedor"
+            style="display: none;"
+        >
+
+            <input
+                id="popup-input"
+                class="popup-input"
+                type="text"
+                autocomplete="off"
+            >
+
+            <small
+                id="popup-ayuda-input"
+                class="popup-ayuda-input"
+            ></small>
+
+        </div>
+
+
+        <div class="popup-acciones">
+
+            <button
+                id="popup-cancelar"
+                class="popup-btn popup-btn-cancelar"
+                type="button"
+            >
+                Cancelar
+            </button>
+
+
+            <button
+                id="popup-confirmar"
+                class="popup-btn popup-btn-confirmar"
+                type="button"
+            >
+                Confirmar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <!-- ================================= -->
+<!-- FOOTER -->
+<!-- ================================= -->
+
+<footer class="footer">
+
+    <div class="footer-contenido">
+
+        <div class="footer-marca">
+
+            <h3>VersoLibre</h3>
+
+            <p>
+                Un espacio para escribir, guardar y compartir tus palabras.
+            </p>
+
+        </div>
+
+        <div class="footer-derecha">
+
+            <p>
+                © 2026 VersoLibre
+            </p>
+
+            <span>
+                Hecho para quienes tienen algo que contar.
+                <br>
+                Por: Gael Guerrero.
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+    </section>
+
+    
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.11.0/mammoth.browser.min.js"></script>
+    <script src="https://unpkg.com/docx@9.5.1/dist/index.umd.cjs"></script>
+    <script src="script.js"></script>
+
+
+
+</body>
+
+</html>
