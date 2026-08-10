@@ -396,6 +396,12 @@
                     Ningún archivo seleccionado
                 </div>
 
+                <div class="subir-descripcion-wrap">
+                    <label for="descripcion-subida">Descripción</label>
+                    <textarea id="descripcion-subida" class="descripcion-subida" placeholder="¿De qué trata este escrito? (opcional)" maxlength="350" rows="3"></textarea>
+                    <span id="contador-descripcion-subida" class="contador-descripcion">0 / 350</span>
+                </div>
+
 
                 <button
                     id="btn-confirmar-subida"
@@ -409,6 +415,10 @@
 
         </div>
 
+
+<!-- ========================= -->
+<!-- MODAL PARA LEER ESCRITO -->
+<!-- ========================= -->
 
 <!-- ========================= -->
 <!-- MODAL PARA LEER ESCRITO -->
@@ -432,59 +442,125 @@
         </button>
 
 
-        <div class="lectura-header">
+        <!-- ========================= -->
+        <!-- TÍTULO Y FECHA -->
+        <!-- ========================= -->
+
+        <section class="lectura-seccion lectura-seccion-titulo">
+
+            <div class="lectura-etiqueta">
+                Título
+            </div>
 
             <h2 id="titulo-lectura">
                 Título del escrito
             </h2>
 
+            <span
+                id="fecha-lectura"
+                class="fecha-lectura"
+            >
+                Fecha
+            </span>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- AUTOR -->
+        <!-- Solo se muestra al leer -->
+        <!-- un escrito compartido -->
+        <!-- ========================= -->
+
+        <section
+            id="seccion-autor-lectura"
+            class="lectura-seccion lectura-seccion-autor"
+            style="display: none;"
+        >
+
+            <div class="lectura-etiqueta">
+                Autor
+            </div>
+
+
             <div class="autor-compartido">
 
-            <div class="autor-foto-contenedor">
+                <div class="autor-foto-contenedor">
 
-                <img
-                    id="autor-foto"
-                    class="autor-foto"
-                    src=""
-                    alt="Foto del autor"
-                >
+                    <img
+                        id="autor-foto"
+                        class="autor-foto"
+                        src=""
+                        alt="Foto del autor"
+                    >
 
-                <div
-                    id="autor-foto-placeholder"
-                    class="autor-foto-placeholder"
-                >
-                    👤
+                    <div
+                        id="autor-foto-placeholder"
+                        class="autor-foto-placeholder"
+                    >
+                        👤
+                    </div>
+
+                </div>
+
+
+                <div class="autor-info">
+
+                    <strong id="autor-nombre">
+                        Autor
+                    </strong>
+
+                    <p id="autor-descripcion">
+                    </p>
+
                 </div>
 
             </div>
 
-
-            <div class="autor-info">
-
-                <strong id="autor-nombre">
-                    Autor
-                </strong>
-
-                <p id="autor-descripcion">
-                </p>
-
-            </div>
-
-        </div>
-
-            <span id="fecha-lectura">
-                Fecha
-            </span>
-
-        </div>
+        </section>
 
 
-        <div
-            id="texto-lectura"
-            class="texto-lectura"
+        <!-- ========================= -->
+        <!-- DESCRIPCIÓN -->
+        <!-- ========================= -->
+
+        <section
+            class="lectura-seccion lectura-seccion-descripcion"
         >
 
-        </div>
+            <div class="lectura-etiqueta">
+                Descripción
+            </div>
+
+            <p
+                id="descripcion-lectura"
+                class="descripcion-lectura"
+            >
+                Este escrito todavía no tiene descripción.
+            </p>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- CONTENIDO -->
+        <!-- ========================= -->
+
+        <section
+            class="lectura-seccion lectura-seccion-contenido"
+        >
+
+            <div class="lectura-etiqueta">
+                Contenido
+            </div>
+
+            <div
+                id="texto-lectura"
+                class="texto-lectura"
+            >
+            </div>
+
+        </section>
 
     </div>
 
@@ -603,8 +679,8 @@
                     <strong>Público</strong>
 
                     <small>
-                        Cualquiera con el enlace
-                        puede verlo.
+                        Cualquiera puede verlo y aparecerá 
+                        en tu perfil público.
                     </small>
                 </div>
 
@@ -860,6 +936,26 @@
         >
             ➕ Agregar otra cuenta
         </button>
+
+        <div class="cuenta-perfil-publico-opciones">
+
+        <button
+            id="btn-ver-mi-perfil"
+            class="btn-perfil-cuenta"
+            type="button"
+        >
+            👁 Ver mi perfil público
+        </button>
+
+        <button
+            id="btn-copiar-mi-perfil"
+            class="btn-perfil-cuenta"
+            type="button"
+        >
+            🔗 Copiar enlace de mi perfil
+        </button>
+
+    </div>
 
 
         <button
@@ -1165,13 +1261,18 @@
 
             <div class="hoja-editor">
 
-                <input
-                    type="text"
+                <textarea
                     id="nuevo-escrito-titulo"
                     class="nuevo-escrito-titulo"
                     placeholder="Título de tu escrito"
                     maxlength="200"
-                >
+                    rows="1"
+                ></textarea>
+
+                <div class="editor-descripcion-wrap">
+                    <textarea id="nuevo-escrito-descripcion" class="nuevo-escrito-descripcion" placeholder="Añade una breve descripción de tu escrito..." maxlength="350" rows="2"></textarea>
+                    <span id="contador-descripcion" class="contador-descripcion">0 / 350</span>
+                </div>
 
 
                 <!-- QUILL -->
