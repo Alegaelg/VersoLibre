@@ -19,6 +19,17 @@ const clienteSupabase =
 // ELEMENTOS
 // =================================
 
+const btnVerMiPerfil =
+    document.getElementById(
+        "btn-ver-mi-perfil"
+    );
+
+
+const btnCopiarMiPerfil =
+    document.getElementById(
+        "btn-copiar-mi-perfil"
+    );
+
 const modalPopup =
     document.getElementById(
         "modal-popup"
@@ -88,6 +99,9 @@ const nuevoEscritoTitulo =
     document.getElementById(
         "nuevo-escrito-titulo"
     );
+
+const nuevoEscritoDescripcion = document.getElementById("nuevo-escrito-descripcion");
+const contadorDescripcion = document.getElementById("contador-descripcion");
 
 const estadoEditor =
     document.getElementById(
@@ -558,6 +572,9 @@ const archivoSeleccionado =
         "archivo-seleccionado"
     );
 
+const descripcionSubida = document.getElementById("descripcion-subida");
+const contadorDescripcionSubida = document.getElementById("contador-descripcion-subida");
+
 const btnConfirmarSubida =
     document.getElementById(
         "btn-confirmar-subida"
@@ -602,6 +619,14 @@ const fechaLectura =
     document.getElementById(
         "fecha-lectura"
     );
+
+
+const seccionAutorLectura =
+    document.getElementById(
+        "seccion-autor-lectura"
+    );
+
+const descripcionLectura = document.getElementById("descripcion-lectura");
 
 const textoLectura =
     document.getElementById(
@@ -1091,6 +1116,10 @@ async function abrirNuevoEscrito() {
             nuevoEscritoTitulo.value =
                 borrador.titulo || "";
 
+            nuevoEscritoDescripcion.value = borrador.descripcion || "";
+            actualizarContadorDescripcion();
+            
+
 
             if (
                 borrador.contenidoHTML
@@ -1144,6 +1173,10 @@ async function abrirNuevoEscrito() {
     nuevoEscritoTitulo.value =
         "";
 
+    nuevoEscritoDescripcion.value = "";
+    actualizarContadorDescripcion();
+
+    ajustarAlturaTitulo();
 
     editorQuill.setText(
         ""
@@ -1163,6 +1196,8 @@ async function abrirNuevoEscrito() {
 
     setTimeout(
         function() {
+
+            ajustarAlturaTitulo();
 
             nuevoEscritoTitulo.focus();
 
@@ -1187,6 +1222,8 @@ async function intentarCerrarNuevoEscrito() {
         editorQuill
             .getText()
             .trim();
+
+    const descripcion = nuevoEscritoDescripcion.value.trim();
 
 
     // =================================
@@ -1242,7 +1279,8 @@ async function intentarCerrarNuevoEscrito() {
 
     if (
         titulo === "" &&
-        texto === ""
+        texto === "" &&
+        descripcion === ""
     ) {
 
         cerrarEditorNuevoEscrito();
@@ -1319,6 +1357,8 @@ nuevoEscritoTitulo.addEventListener(
     "input",
     function() {
 
+        ajustarAlturaTitulo();
+
         estadoEditor.textContent =
             "Cambios sin guardar";
 
@@ -1327,6 +1367,19 @@ nuevoEscritoTitulo.addEventListener(
     }
 );
 
+
+nuevoEscritoDescripcion.addEventListener(
+    "input",
+    function() {
+        actualizarContadorDescripcion();
+        estadoEditor.textContent = "Cambios sin guardar";
+        programarAutoguardado();
+    }
+);
+
+function actualizarContadorDescripcion() {
+    contadorDescripcion.textContent = nuevoEscritoDescripcion.value.length + " / 350";
+}
 
 function actualizarContadoresEditor() {
 
@@ -1477,6 +1530,8 @@ async function guardarNuevoEscrito(
 
     const titulo =
         nuevoEscritoTitulo.value.trim();
+
+    const descripcion = nuevoEscritoDescripcion.value.trim();
 
 
     const contenidoTexto =
@@ -1640,6 +1695,9 @@ mostrarAviso(
                 titulo:
                     titulo,
 
+                descripcion:
+                    descripcion,
+
                 contenido:
                     contenidoTexto,
 
@@ -1704,6 +1762,9 @@ await clienteSupabase
 
         titulo:
             guardado.titulo,
+
+        descripcion:
+            guardado.descripcion || "",
 
         contenido:
             guardado.contenido || "",
@@ -1802,9 +1863,24 @@ function limpiarNombreArchivo(
 ) {
 
     return nombre
+        .normalize(
+            "NFD"
+        )
         .replace(
-            /[\\/:*?"<>|]/g,
-            "-"
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .replace(
+            /[^a-zA-Z0-9._-]+/g,
+            "_"
+        )
+        .replace(
+            /_+/g,
+            "_"
+        )
+        .replace(
+            /^_+|_+$/g,
+            ""
         );
 
 }
@@ -2242,6 +2318,8 @@ function guardarBorradorEditor() {
     const titulo =
         nuevoEscritoTitulo.value.trim();
 
+    const descripcion = nuevoEscritoDescripcion.value.trim();
+
 
     const contenidoTexto =
         editorQuill
@@ -2259,7 +2337,8 @@ function guardarBorradorEditor() {
 
     if (
         titulo === "" &&
-        contenidoTexto === ""
+        contenidoTexto === "" &&
+        descripcion === ""
     ) {
 
         localStorage.removeItem(
@@ -2280,6 +2359,9 @@ function guardarBorradorEditor() {
 
         titulo:
             titulo,
+
+        descripcion:
+            descripcion,
 
         contenidoTexto:
             contenidoTexto,
@@ -2414,6 +2496,8 @@ async function eliminarBorradorActual() {
 
     nuevoEscritoTitulo.value =
         "";
+
+    ajustarAlturaTitulo();
 
 
     editorQuill.setText(
@@ -2600,6 +2684,8 @@ async function guardarCambiosEditor() {
     const titulo =
         nuevoEscritoTitulo.value.trim();
 
+    const descripcion = nuevoEscritoDescripcion.value.trim();
+
 
     const contenidoTexto =
         editorQuill
@@ -2723,6 +2809,9 @@ async function guardarCambiosEditor() {
                 titulo:
                     titulo,
 
+                descripcion:
+                    descripcion,
+
                 contenido:
                     contenidoTexto,
 
@@ -2749,8 +2838,13 @@ async function guardarCambiosEditor() {
         resultado.error
     ) {
 
-mostrarAviso(
-            "El archivo fue actualizado, pero hubo un error al actualizar los datos del escrito."
+    console.error(
+        "ERROR AL ACTUALIZAR ESCRITO:",
+        resultado.error
+);
+
+    mostrarAviso(
+        "El archivo fue actualizado, pero hubo un error al actualizar los datos del escrito."
         );
 
 
@@ -2781,6 +2875,8 @@ mostrarAviso(
 
     escritoEditor.titulo =
         actualizado.titulo;
+
+    escritoEditor.descripcion = actualizado.descripcion || "";
 
 
     escritoEditor.contenido =
@@ -2819,6 +2915,8 @@ mostrarAviso(
 
         escritoLocal.titulo =
             actualizado.titulo;
+
+        escritoLocal.descripcion = actualizado.descripcion || "";
 
 
         escritoLocal.contenido =
@@ -4203,7 +4301,7 @@ perfilPublicoNombre.textContent =
         await clienteSupabase
             .from("escritos")
             .select(
-                "id, titulo, fecha_creacion, share_id, tipo"
+                "id, titulo, fecha_creacion, share_id, tipo, descripcion"
             )
             .eq(
                 "usuario_id",
@@ -4238,6 +4336,72 @@ return;
 
     const escritosPublicos =
         resultadoEscritos.data;
+
+
+    // =================================
+    // DESCRIPCIONES PARA EL PERFIL
+    // =================================
+
+    if (
+        escritosPublicos.length > 0
+    ) {
+
+        const idsEscritos =
+            escritosPublicos.map(
+                function(escrito) {
+
+                    return escrito.id;
+
+                }
+            );
+
+
+        const resultadoDescripciones =
+            await clienteSupabase
+                .from("escritos")
+                .select(
+                    "id, descripcion"
+                )
+                .in(
+                    "id",
+                    idsEscritos
+                );
+
+
+        if (
+            !resultadoDescripciones.error &&
+            resultadoDescripciones.data
+        ) {
+
+            const descripcionesPorId =
+                new Map(
+                    resultadoDescripciones.data.map(
+                        function(escrito) {
+
+                            return [
+                                escrito.id,
+                                escrito.descripcion || ""
+                            ];
+
+                        }
+                    )
+                );
+
+
+            escritosPublicos.forEach(
+                function(escrito) {
+
+                    escrito.descripcion =
+                        descripcionesPorId.get(
+                            escrito.id
+                        ) || "";
+
+                }
+            );
+
+        }
+
+    }
 
 
     // =================================
@@ -4315,14 +4479,46 @@ function crearTarjetaEscritoPublico(
     );
 
 
+    const contenidoTarjeta =
+        document.createElement(
+            "div"
+        );
+
+
+    contenidoTarjeta.classList.add(
+        "contenido-tarjeta-publica"
+    );
+
+
     const titulo =
         document.createElement(
             "h3"
         );
 
 
+    titulo.classList.add(
+        "titulo-tarjeta-publica"
+    );
+
+
     titulo.textContent =
         escrito.titulo;
+
+
+    const descripcion =
+        document.createElement(
+            "p"
+        );
+
+
+    descripcion.classList.add(
+        "descripcion-tarjeta-publica"
+    );
+
+
+    descripcion.textContent =
+        escrito.descripcion ||
+        "Este escrito todavía no tiene descripción.";
 
 
     const fecha =
@@ -4331,14 +4527,29 @@ function crearTarjetaEscritoPublico(
         );
 
 
+    fecha.classList.add(
+        "fecha-tarjeta-publica"
+    );
+
+
     fecha.textContent =
         formatearFecha(
             escrito.fecha_creacion
         );
 
 
-    tarjeta.appendChild(
+    contenidoTarjeta.appendChild(
         titulo
+    );
+
+
+    contenidoTarjeta.appendChild(
+        descripcion
+    );
+
+
+    tarjeta.appendChild(
+        contenidoTarjeta
     );
 
 
@@ -4346,10 +4557,6 @@ function crearTarjetaEscritoPublico(
         fecha
     );
 
-
-    // =================================
-    // ABRIR ESCRITO
-    // =================================
 
     tarjeta.addEventListener(
         "click",
@@ -5693,11 +5900,17 @@ function convertirEscritoCompartido(
         titulo:
             escrito.titulo,
 
+        descripcion:
+            escrito.descripcion || "",
+
         contenido:
             escrito.contenido || "",
 
         contenidoHTML:
             escrito.contenido_html || "",
+
+        descripcion:
+            escrito.descripcion || "",
 
         nombreArchivo:
             escrito.nombre_archivo || "",
@@ -5730,13 +5943,17 @@ function mostrarEscritoCompartido(
     escrito
 ) {
 
-pantallaLogin.style.display =
+    pantallaLogin.style.display =
         "none";
 
 
     pantallaPortafolio.style.display =
         "block";
 
+
+    // =================================
+    // TÍTULO Y FECHA
+    // =================================
 
     tituloLectura.textContent =
         escrito.titulo;
@@ -5748,10 +5965,31 @@ pantallaLogin.style.display =
         );
 
 
+    // =================================
+    // AUTOR
+    // =================================
+
+    seccionAutorLectura.style.display =
+        "block";
+
+
     cargarAutorEscrito(
         escrito.usuario_id
     );
 
+
+    // =================================
+    // DESCRIPCIÓN
+    // =================================
+
+    descripcionLectura.textContent =
+        escrito.descripcion ||
+        "Este escrito todavía no tiene descripción.";
+
+
+    // =================================
+    // CONTENIDO
+    // =================================
 
     if (
         escrito.contenidoHTML &&
@@ -5778,15 +6016,13 @@ pantallaLogin.style.display =
         textoLectura.textContent =
             "Este escrito no tiene contenido.";
 
-}
+    }
 
 
     modalLectura.style.display =
         "flex";
 
-
 }
-
 
 // =================================
 // COMPROBAR URL AL ABRIR
@@ -6019,7 +6255,7 @@ perfilPublicoNombre.textContent =
         await clienteSupabase
             .from("escritos")
             .select(
-                "id, titulo, fecha_creacion, share_id, tipo"
+                "id, titulo, fecha_creacion, share_id, tipo, descripcion"
             )
             .eq(
                 "usuario_id",
@@ -6054,6 +6290,72 @@ return;
 
     const escritosPublicos =
         resultadoEscritos.data;
+
+
+    // =================================
+    // DESCRIPCIONES PARA EL PERFIL
+    // =================================
+
+    if (
+        escritosPublicos.length > 0
+    ) {
+
+        const idsEscritos =
+            escritosPublicos.map(
+                function(escrito) {
+
+                    return escrito.id;
+
+                }
+            );
+
+
+        const resultadoDescripciones =
+            await clienteSupabase
+                .from("escritos")
+                .select(
+                    "id, descripcion"
+                )
+                .in(
+                    "id",
+                    idsEscritos
+                );
+
+
+        if (
+            !resultadoDescripciones.error &&
+            resultadoDescripciones.data
+        ) {
+
+            const descripcionesPorId =
+                new Map(
+                    resultadoDescripciones.data.map(
+                        function(escrito) {
+
+                            return [
+                                escrito.id,
+                                escrito.descripcion || ""
+                            ];
+
+                        }
+                    )
+                );
+
+
+            escritosPublicos.forEach(
+                function(escrito) {
+
+                    escrito.descripcion =
+                        descripcionesPorId.get(
+                            escrito.id
+                        ) || "";
+
+                }
+            );
+
+        }
+
+    }
 
 
     if (
@@ -6244,6 +6546,28 @@ return;
             return;
 
         }
+
+        // =================================
+        // PERFIL PÚBLICO
+        // =================================
+
+        const autorPublico =
+            obtenerAutorIdDeURL();
+
+
+        if (
+            autorPublico
+        ) {
+
+            pantallaLogin.style.display =
+                "none";
+
+            pantallaPortafolio.style.display =
+                "block";
+
+            return;
+
+}
 
 
         // =================================
@@ -6827,8 +7151,18 @@ function cerrarModalSubir() {
     archivoTemporal =
         null;
 
+    descripcionSubida.value = "";
+    contadorDescripcionSubida.textContent = "0 / 350";
+
 }
 
+
+descripcionSubida.addEventListener(
+    "input",
+    function() {
+        contadorDescripcionSubida.textContent = descripcionSubida.value.length + " / 350";
+    }
+);
 
 // =================================
 // SELECCIONAR ARCHIVO
@@ -6980,6 +7314,8 @@ archivoSeleccionado.textContent =
             nombreOriginal
         );
 
+    const descripcion = descripcionSubida.value.trim();
+
 
     const tipo =
         nombreOriginal
@@ -7071,7 +7407,9 @@ archivoSeleccionado.textContent =
     const nombreArchivoStorage =
         Date.now() +
         "_" +
-        nombreOriginal;
+        limpiarNombreArchivo(
+            nombreOriginal
+        );
 
 
     const rutaArchivo =
@@ -7128,6 +7466,9 @@ archivoSeleccionado.textContent =
 
         titulo:
             titulo,
+
+        descripcion:
+            descripcion,
 
         contenido:
             contenido,
@@ -7195,6 +7536,9 @@ await clienteSupabase.storage
 
         titulo:
             escritoGuardado.titulo,
+
+        descripcion:
+            escritoGuardado.descripcion || "",
 
         nombreArchivo:
             escritoGuardado.nombre_archivo,
@@ -7338,8 +7682,14 @@ return;
                         contenidoHTML:
                             escrito.contenido_html || "",
 
+                        descripcion:
+                            escrito.descripcion || "",
+
                         titulo:
                             escrito.titulo,
+
+                        descripcion:
+                            escrito.descripcion || "",
 
                         nombreArchivo:
                             escrito.nombre_archivo ||
@@ -7596,6 +7946,7 @@ function crearTarjeta(
         escrito.titulo;
 
 
+
     const fecha =
         document.createElement(
             "p"
@@ -7612,11 +7963,46 @@ function crearTarjeta(
             escrito.fecha
         );
 
+    const estadoPrivacidad =
+        document.createElement(
+            "span"
+        );
+
+    estadoPrivacidad.classList.add(
+        "estado-privacidad"
+    );
+
+    if (
+        escrito.privacidad === "publico"
+    ) {
+
+        estadoPrivacidad.classList.add(
+            "estado-publico"
+        );
+
+        estadoPrivacidad.textContent =
+            "🌎 Público";
+
+    }
+
+    else {
+
+        estadoPrivacidad.classList.add(
+            "estado-privado"
+        );
+
+        estadoPrivacidad.textContent =
+            "🔒 Privado";
+
+    }
+
 
     const acciones =
         document.createElement(
             "div"
         );
+
+    
 
 
     acciones.classList.add(
@@ -7791,6 +8177,10 @@ function crearTarjeta(
 
     tarjeta.appendChild(
         fecha
+    );
+
+    tarjeta.appendChild(
+        estadoPrivacidad
     );
 
 
@@ -8042,9 +8432,21 @@ function leerEscrito(
     escrito
 ) {
 
+    // =================================
+    // LECTURA PERSONAL
+    // =================================
+
+    seccionAutorLectura.style.display =
+        "none";
+
+
     autorCompartido.style.display =
         "none";
 
+
+    // =================================
+    // TÍTULO Y FECHA
+    // =================================
 
     tituloLectura.textContent =
         escrito.titulo;
@@ -8055,6 +8457,19 @@ function leerEscrito(
             escrito.fecha
         );
 
+
+    // =================================
+    // DESCRIPCIÓN
+    // =================================
+
+    descripcionLectura.textContent =
+        escrito.descripcion ||
+        "Este escrito todavía no tiene descripción.";
+
+
+    // =================================
+    // CONTENIDO
+    // =================================
 
     if (
         escrito.contenidoHTML &&
@@ -8075,8 +8490,8 @@ function leerEscrito(
     }
 
 
-        modalLectura.style.display =
-            "flex";
+    modalLectura.style.display =
+        "flex";
 
 }
 
@@ -8110,6 +8525,11 @@ function abrirEditor(
 
     nuevoEscritoTitulo.value =
         escrito.titulo || "";
+
+    nuevoEscritoDescripcion.value = escrito.descripcion || "";
+    actualizarContadorDescripcion();
+
+    
 
 
     // =================================
@@ -8167,6 +8587,8 @@ function abrirEditor(
 
     setTimeout(
         function() {
+
+            ajustarAlturaTitulo();
 
             editorQuill.focus();
 
@@ -8317,6 +8739,21 @@ cerrarEditar.addEventListener(
 
     }
 );
+
+
+function ajustarAlturaTitulo() {
+
+    nuevoEscritoTitulo.style.height =
+        "auto";
+
+    nuevoEscritoTitulo.style.height =
+        (
+            nuevoEscritoTitulo.scrollHeight +
+            15
+        ) +
+        "px";
+
+}
 
 
 // =================================
@@ -8678,6 +9115,33 @@ function abrirCompartir(
     escritoCompartiendo =
         escrito;
 
+    opcionPublico.classList.remove(
+        "activa"
+    );
+
+    opcionPrivado.classList.remove(
+        "activa"
+    );
+
+
+    if (
+        escrito.privacidad ===
+        "publico"
+    ) {
+
+        opcionPublico.classList.add(
+            "activa"
+        );
+
+    }
+
+    else {
+
+        opcionPrivado.classList.add(
+            "activa"
+        );
+
+}
 
     nombreCompartir.textContent =
         escrito.titulo;
@@ -8927,6 +9391,36 @@ estadoCompartir.textContent =
 
     }
 
+    mostrarEscritos();
+
+    opcionPublico.classList.remove(
+        "activa"
+    );
+
+    opcionPrivado.classList.remove(
+        "activa"
+    );
+
+
+    if (
+        privacidad ===
+        "publico"
+    ) {
+
+        opcionPublico.classList.add(
+            "activa"
+        );
+
+    }
+
+    else {
+
+        opcionPrivado.classList.add(
+            "activa"
+        );
+
+}
+
 
     // =================================
     // CREAR ENLACE
@@ -9066,6 +9560,8 @@ estadoCompartir.textContent =
     guardarEscritoDB(
         escrito
     );
+
+    mostrarEscritos();
 
 
     const escritoLocal =
@@ -9459,3 +9955,181 @@ copiarLink.addEventListener(
     }
 );
 
+
+//boton ver perfil
+
+btnVerMiPerfil.addEventListener(
+    "click",
+    async function() {
+
+        const resultadoUsuario =
+            await clienteSupabase.auth.getUser();
+
+
+        if (
+            resultadoUsuario.error ||
+            !resultadoUsuario.data.user
+        ) {
+
+            mostrarAviso(
+                "No se pudo identificar tu cuenta."
+            );
+
+            return;
+        }
+
+
+        const usuarioActual =
+            resultadoUsuario.data.user;
+
+
+        const resultadoPerfil =
+            await clienteSupabase
+                .from("perfiles")
+                .select(
+                    "username"
+                )
+                .eq(
+                    "id",
+                    usuarioActual.id
+                )
+                .maybeSingle();
+
+
+        if (
+            resultadoPerfil.error ||
+            !resultadoPerfil.data ||
+            !resultadoPerfil.data.username
+        ) {
+
+            mostrarAviso(
+                "Primero debes guardar un nombre de usuario."
+            );
+
+            return;
+        }
+
+
+        const username =
+            resultadoPerfil.data.username;
+
+
+        cerrarModalCuenta();
+
+
+        const url =
+            new URL(
+                window.location.href
+            );
+
+
+        url.searchParams.delete(
+            "escrito"
+        );
+
+
+        url.searchParams.set(
+            "autor",
+            username
+        );
+
+
+        window.history.pushState(
+            {},
+            "",
+            url.pathname +
+            url.search
+        );
+
+
+        await abrirPerfilPublicoDesdeURL(
+            username
+        );
+
+    }
+);
+
+// copiar enlace
+
+btnCopiarMiPerfil.addEventListener(
+    "click",
+    async function() {
+
+        const resultadoUsuario =
+            await clienteSupabase.auth.getUser();
+
+
+        if (
+            resultadoUsuario.error ||
+            !resultadoUsuario.data.user
+        ) {
+
+            mostrarAviso(
+                "No se pudo identificar tu cuenta."
+            );
+
+            return;
+        }
+
+
+        const usuarioActual =
+            resultadoUsuario.data.user;
+
+
+        const resultadoPerfil =
+            await clienteSupabase
+                .from("perfiles")
+                .select(
+                    "username"
+                )
+                .eq(
+                    "id",
+                    usuarioActual.id
+                )
+                .maybeSingle();
+
+
+        if (
+            resultadoPerfil.error ||
+            !resultadoPerfil.data ||
+            !resultadoPerfil.data.username
+        ) {
+
+            mostrarAviso(
+                "Primero debes guardar un nombre de usuario."
+            );
+
+            return;
+        }
+
+
+        const enlace =
+            window.location.origin +
+            window.location.pathname +
+            "?autor=" +
+            encodeURIComponent(
+                resultadoPerfil.data.username
+            );
+
+
+        await navigator.clipboard.writeText(
+            enlace
+        );
+
+
+        btnCopiarMiPerfil.textContent =
+            "✓ Enlace copiado";
+
+
+        setTimeout(
+            function() {
+
+                btnCopiarMiPerfil.textContent =
+                    "🔗 Copiar enlace de mi perfil";
+
+            },
+            1500
+        );
+
+    }
+);
