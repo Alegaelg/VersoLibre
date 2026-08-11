@@ -6985,13 +6985,20 @@ formRegistro.addEventListener(
         const resultado =
             await clienteSupabase.auth.signUp({
 
-                email:
-                    email,
+            email:
+                email,
+    
+            password:
+                password,
+    
+            options: {
+    
+                emailRedirectTo:
+                    "https://alegaelg.github.io/VersoLibre/"
+    
+            }
 
-                password:
-                    password
-
-            });
+    });
 
 
         if (
