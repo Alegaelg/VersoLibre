@@ -5689,7 +5689,6 @@ async function comprobarEscritoCompartido() {
 
 
         return false;
-
     }
 
 
@@ -5701,7 +5700,7 @@ async function comprobarEscritoCompartido() {
         shareId;
 
 
-// =================================
+    // =================================
     // COMPROBAR SESIÓN
     // =================================
 
@@ -5714,71 +5713,69 @@ async function comprobarEscritoCompartido() {
 
 
     // =================================
-    // SI NO HAY SESIÓN
+    // BUSCAR MEDIANTE FUNCIÓN SEGURA
+    // =================================
+
+    const resultado =
+        await clienteSupabase
+            .rpc(
+                "obtener_escrito_compartido",
+                {
+                    p_share_id:
+                        shareId
+                }
+            )
+            .maybeSingle();
+
+
+    if (
+        resultado.error
+    ) {
+
+        console.log(
+            "Error al cargar escrito compartido:",
+            resultado.error
+        );
+
+
+        mostrarLogin();
+
+
+        mensajeLogin.textContent =
+            "No se pudo cargar el escrito.";
+
+
+        return true;
+    }
+
+
+    // =================================
+    // ESCRITO ENCONTRADO
+    // =================================
+
+    if (
+        resultado.data
+    ) {
+
+        mostrarEscritoCompartido(
+            convertirEscritoCompartido(
+                resultado.data
+            )
+        );
+
+
+        return true;
+    }
+
+
+    // =================================
+    // SIN SESIÓN
+    // PUEDE SER PRIVADO
     // =================================
 
     if (
         !sesion
     ) {
-
-        const resultadoPublico =
-            await clienteSupabase
-                .from("escritos")
-                .select("*")
-                .eq(
-                    "share_id",
-                    shareId
-                )
-                .eq(
-                    "privacidad",
-                    "publico"
-                )
-                .maybeSingle();
-
-
-        if (
-            resultadoPublico.error
-        ) {
-
-mostrarLogin();
-
-
-            mensajeLogin.textContent =
-                "No se pudo cargar el escrito.";
-
-
-            return true;
-
-        }
-
-
-        // =================================
-        // ES PÚBLICO
-        // =================================
-
-        if (
-            resultadoPublico.data
-        ) {
-
-            const escrito =
-                resultadoPublico.data;
-
-
-            mostrarEscritoCompartido(
-                convertirEscritoCompartido(
-                    escrito
-                )
-            );
-
-
-            return true;
-
-        }
-
-
-        // =================================
-        // PUEDE SER PRIVADO
-        // =================================
 
         mostrarLogin();
 
@@ -5788,92 +5785,18 @@ mostrarLogin();
 
 
         return true;
-
     }
 
 
     // =================================
-    // HAY SESIÓN
+    // CON SESIÓN PERO NO EXISTE
     // =================================
 
-    const usuarioActual =
-        sesion.user;
+    mostrarLogin();
 
 
-    const resultado =
-        await clienteSupabase
-            .from("escritos")
-            .select("*")
-            .eq(
-                "share_id",
-                shareId
-            )
-            .maybeSingle();
-
-
-    if (
-        resultado.error
-    ) {
-
-mostrarAviso(
-            "No se pudo cargar el escrito."
-        );
-
-
-        return true;
-
-    }
-
-
-    if (
-        !resultado.data
-    ) {
-
-        mostrarAviso(
-            "Este escrito no existe o ya fue eliminado."
-        );
-
-
-        return true;
-
-    }
-
-
-    const escrito =
-        resultado.data;
-
-
-// =================================
-    // PRIVADO
-    // =================================
-
-    if (
-        escrito.privacidad ===
-        "privado"
-    ) {
-
-        if (
-            usuarioActual.id !==
-            escrito.usuario_id
-        ) {
-
-            mostrarAviso(
-            "Este escrito es privado y no tienes permiso para verlo."
-        );
-
-
-            return true;
-
-        }
-
-    }
-
-
-    mostrarEscritoCompartido(
-        convertirEscritoCompartido(
-            escrito
-        )
-    );
+    mensajeLogin.textContent =
+        "Este escrito no existe, ya no está compartido o fue eliminado.";
 
 
     return true;
@@ -6461,113 +6384,26 @@ async function comprobarSesion() {
 clienteSupabase.auth.onAuthStateChange(
     async function(evento, sesion) {
 
-// =================================
-        // ESCRITO COMPARTIDO
-        // =================================
+    // =================================
+    // ESCRITO COMPARTIDO
+    // =================================
+
+    if (
+        modoEscritoCompartido
+    ) {
 
         if (
-            modoEscritoCompartido
+            sesion &&
+            shareIdPendiente
         ) {
 
-            if (
-                sesion &&
-                shareIdPendiente
-            ) {
-
-const resultado =
-                    await clienteSupabase
-                        .from("escritos")
-                        .select("*")
-                        .eq(
-                            "share_id",
-                            shareIdPendiente
-                        )
-                        .maybeSingle();
-
-
-                if (
-                    resultado.error
-                ) {
-
-return;
-
-                }
-
-
-                if (
-                    !resultado.data
-                ) {
-
-                    mostrarAviso(
-            "Este escrito no existe o ya fue eliminado."
-        );
-
-
-                    return;
-
-                }
-
-
-                const escrito =
-                    resultado.data;
-
-
-                if (
-                    escrito.privacidad ===
-                    "privado"
-                ) {
-
-                    if (
-                        sesion.user.id !==
-                        escrito.usuario_id
-                    ) {
-
-                        mostrarAviso(
-            "Este escrito es privado y no tienes permiso para verlo."
-        );
-
-
-                        return;
-
-                    }
-
-                }
-
-
-                mostrarEscritoCompartido(
-                    convertirEscritoCompartido(
-                        escrito
-                    )
-                );
-
-            }
-
-
-            return;
+            await comprobarEscritoCompartido();
 
         }
 
-        // =================================
-        // PERFIL PÚBLICO
-        // =================================
 
-        const autorPublico =
-            obtenerAutorIdDeURL();
-
-
-        if (
-            autorPublico
-        ) {
-
-            pantallaLogin.style.display =
-                "none";
-
-            pantallaPortafolio.style.display =
-                "block";
-
-            return;
-
-}
+        return;
+    }
 
 
         // =================================
@@ -6985,18 +6821,18 @@ formRegistro.addEventListener(
         const resultado =
             await clienteSupabase.auth.signUp({
 
-            email:
-                email,
-    
-            password:
-                password,
-    
-            options: {
-    
-                emailRedirectTo:
-                    "https://alegaelg.github.io/VersoLibre/"
-    
-            }
+                email:
+                    email,
+
+                password:
+                    password,
+
+                options: {
+
+                    emailRedirectTo:
+                        "https://alegaelg.github.io/VersoLibre/"
+
+                }
 
     });
 
