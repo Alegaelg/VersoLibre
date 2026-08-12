@@ -223,6 +223,28 @@ const explorarVacio =
         "explorar-vacio"
     );
 
+const btnExplorarPortada = document.getElementById("btn-explorar-portada");
+const btnExplorarTodos = document.getElementById("btn-explorar-todos");
+const btnExplorarAutores = document.getElementById("btn-explorar-autores");
+const btnVerTodosRecientes = document.getElementById("btn-ver-todos-recientes");
+const btnVolverExplorarDesdeTodos = document.getElementById("btn-volver-explorar-desde-todos");
+const btnVolverExplorarDesdeAutores = document.getElementById("btn-volver-explorar-desde-autores");
+
+const vistaExplorarInicio = document.getElementById("vista-explorar-inicio");
+const vistaExplorarTodos = document.getElementById("vista-explorar-todos");
+const vistaExplorarAutores = document.getElementById("vista-explorar-autores");
+const vistaExplorarAutorDetalle = document.getElementById("vista-explorar-autor-detalle");
+
+const listaExplorarRecientes = document.getElementById("lista-explorar-recientes");
+const listaExplorarPopulares = document.getElementById("lista-explorar-populares");
+const bloqueExplorarPopulares = document.getElementById("bloque-explorar-populares");
+const explorarPopularesVacio = document.getElementById("explorar-populares-vacio");
+const listaAutoresExplorar = document.getElementById("lista-autores-explorar");
+const listaAutorEscritos = document.getElementById("lista-autor-escritos");
+const cerrarAutorExplorar = document.getElementById("cerrar-autor-explorar");
+const tituloAutorExplorar = document.getElementById("titulo-autor-explorar");
+const subtituloAutorExplorar = document.getElementById("subtitulo-autor-explorar");
+
 const btnVolverInicio =
     document.getElementById(
         "btn-volver-inicio"
@@ -394,26 +416,6 @@ const headerNombreAutor =
         "header-nombre-autor"
     );
 
-const modalElegirCuenta =
-    document.getElementById(
-        "modal-elegir-cuenta"
-    );
-
-const cerrarElegirCuenta =
-    document.getElementById(
-        "cerrar-elegir-cuenta"
-    );
-
-const listaCuentas =
-    document.getElementById(
-        "lista-cuentas"
-    );
-
-const btnNuevaCuenta =
-    document.getElementById(
-        "btn-nueva-cuenta"
-    );
-
 const btnAgregarCuenta =
     document.getElementById(
         "btn-agregar-cuenta"
@@ -488,6 +490,12 @@ let escritoLikeLectura =
     null;
 
 let escritosExplorar = [];
+let autoresExplorar = [];
+let vistaExplorarActual = "inicio";
+let vistaExplorarAntesBusqueda = "inicio";
+let autorExplorarActualId = null;
+let vistaExplorarRegresoLectura = "inicio";
+let autorExplorarRegresoLecturaId = null;
 
 let modoEditor =
     "nuevo";
@@ -543,36 +551,6 @@ const cuentaNombreAutor =
         "cuenta-nombre-autor"
     );
 
-const modalContrasena =
-    document.getElementById(
-        "modal-contrasena"
-    );
-
-const cerrarContrasena =
-    document.getElementById(
-        "cerrar-contrasena"
-    );
-
-const nuevaContrasena =
-    document.getElementById(
-        "nueva-contrasena"
-    );
-
-const confirmarContrasena =
-    document.getElementById(
-        "confirmar-contrasena"
-    );
-
-const mensajeContrasena =
-    document.getElementById(
-        "mensaje-contrasena"
-    );
-
-const btnGuardarContrasena =
-    document.getElementById(
-        "btn-guardar-contrasena"
-    );
-
 const btnMiCuenta =
     document.getElementById(
         "btn-mi-cuenta"
@@ -626,11 +604,6 @@ const cuentaDescripcion =
 const btnGuardarCuenta =
     document.getElementById(
         "btn-guardar-cuenta"
-    );
-
-const btnCambiarContrasena =
-    document.getElementById(
-        "btn-cambiar-contrasena"
     );
 
 const dejarDeCompartir =
@@ -3319,23 +3292,21 @@ async function mostrarPortafolio() {
 
 //mostrarExplorar
 
-async function mostrarExplorar() {
+async function mostrarExplorar(
+    preservarVista
+) {
 
     pantallaInicio.style.display =
         "none";
 
-
     pantallaLogin.style.display =
         "none";
-
 
     pantallaPortafolio.style.display =
         "none";
 
-
     pantallaExplorar.style.display =
         "block";
-
 
     window.scrollTo({
         top: 0,
@@ -3343,8 +3314,41 @@ async function mostrarExplorar() {
     });
 
     await actualizarCuentaExplorar();
-
     await cargarExplorar();
+
+    if (
+        preservarVista
+    ) {
+
+        if (
+            vistaExplorarRegresoLectura === "autor-detalle" &&
+            autorExplorarRegresoLecturaId
+        ) {
+
+            mostrarDetalleAutorExplorar(
+                autorExplorarRegresoLecturaId
+            );
+
+        }
+
+        else {
+
+            mostrarVistaExplorar(
+                vistaExplorarRegresoLectura || "inicio"
+            );
+
+        }
+
+    }
+
+    else {
+
+        buscadorExplorar.value = "";
+        actualizarXBuscadorExplorar();
+        vistaExplorarAntesBusqueda = "inicio";
+        mostrarVistaExplorar("inicio");
+
+    }
 
 }
 
@@ -4077,186 +4081,6 @@ function formatearFechaCuenta(
 
         }
     );
-
-}
-
-
-// =================================
-// ABRIR CAMBIAR CONTRASEÑA
-// =================================
-
-btnCambiarContrasena.addEventListener(
-    "click",
-    function() {
-
-        nuevaContrasena.value =
-            "";
-
-        confirmarContrasena.value =
-            "";
-
-        mensajeContrasena.textContent =
-            "";
-
-        modalContrasena.style.display =
-            "flex";
-
-    }
-);
-
-
-// =================================
-// GUARDAR NUEVA CONTRASEÑA
-// =================================
-
-btnGuardarContrasena.addEventListener(
-    "click",
-    cambiarContrasenaUsuario
-);
-
-
-async function cambiarContrasenaUsuario() {
-
-    const password =
-        nuevaContrasena.value;
-
-
-    const confirmacion =
-        confirmarContrasena.value;
-
-
-    // =================================
-    // CAMPOS VACÍOS
-    // =================================
-
-    if (
-        password === "" ||
-        confirmacion === ""
-    ) {
-
-        mensajeContrasena.textContent =
-            "Completa ambos campos.";
-
-        return;
-
-    }
-
-
-    // =================================
-    // CONTRASEÑAS DIFERENTES
-    // =================================
-
-    if (
-        password !==
-        confirmacion
-    ) {
-
-        mensajeContrasena.textContent =
-            "Las contraseñas no coinciden.";
-
-        return;
-
-    }
-
-
-    // =================================
-    // LONGITUD
-    // =================================
-
-    if (
-        password.length < 6
-    ) {
-
-        mensajeContrasena.textContent =
-            "La contraseña debe tener al menos 6 caracteres.";
-
-        return;
-
-    }
-
-
-    mensajeContrasena.textContent =
-        "Cambiando contraseña...";
-
-
-    // =================================
-    // ACTUALIZAR CON SUPABASE AUTH
-    // =================================
-
-    const resultado =
-        await clienteSupabase.auth.updateUser({
-
-            password:
-                password
-
-        });
-
-
-    if (
-        resultado.error
-    ) {
-
-mensajeContrasena.textContent =
-            "No se pudo cambiar la contraseña.";
-
-        return;
-
-    }
-
-
-    // =================================
-    // ÉXITO
-    // =================================
-
-    mensajeContrasena.textContent =
-        "✓ Contraseña actualizada correctamente.";
-
-
-    nuevaContrasena.value =
-        "";
-
-    confirmarContrasena.value =
-        "";
-
-
-    setTimeout(
-        function() {
-
-            cerrarModalContrasena();
-
-        },
-        1200
-    );
-
-}
-
-
-// =================================
-// CERRAR CAMBIAR CONTRASEÑA
-// =================================
-
-cerrarContrasena.addEventListener(
-    "click",
-    cerrarModalContrasena
-);
-
-
-function cerrarModalContrasena() {
-
-    modalContrasena.style.display =
-        "none";
-
-
-    nuevaContrasena.value =
-        "";
-
-
-    confirmarContrasena.value =
-        "";
-
-
-    mensajeContrasena.textContent =
-        "";
 
 }
 
@@ -5357,42 +5181,7 @@ mostrarAviso(
         return;
 
 }
-
-
-    // =================================
-    // QUITAR DEL SELECTOR DE CUENTAS
-    // =================================
-
-    let cuentas =
-        JSON.parse(
-            localStorage.getItem(
-                "cuentasRecordadas"
-            )
-        ) || [];
-
-
-    cuentas =
-        cuentas.filter(
-            function(cuenta) {
-
-                return (
-                    cuenta.id !==
-                    usuarioId
-                );
-
-            }
-        );
-
-
-    localStorage.setItem(
-        "cuentasRecordadas",
-        JSON.stringify(
-            cuentas
-        )
-    );
-
-
-    // =================================
+// =================================
     // LIMPIAR INDEXEDDB
     // =================================
 
@@ -5435,521 +5224,6 @@ mostrarAviso(
 
     window.location.href =
         window.location.pathname;
-
-}
-
-
-// =================================
-// RECORDAR CUENTA
-// =================================
-
-function recordarCuenta(
-    id,
-    email,
-    nombre,
-    fotoUrl
-) {
-
-    let cuentas =
-        JSON.parse(
-            localStorage.getItem(
-                "cuentasRecordadas"
-            )
-        ) || [];
-
-
-    const existe =
-        cuentas.find(
-            function(cuenta) {
-
-                return (
-                    cuenta.id === id
-                );
-
-            }
-        );
-
-
-    if (
-        existe
-    ) {
-
-        existe.email =
-            email;
-
-        existe.nombre =
-            nombre || email;
-
-        existe.fotoUrl =
-            fotoUrl || null;
-
-    }
-
-    else {
-
-        cuentas.push({
-
-            id:
-                id,
-
-            email:
-                email,
-
-            nombre:
-                nombre || email,
-
-            fotoUrl:
-                fotoUrl || null
-
-        });
-
-    }
-
-
-    localStorage.setItem(
-        "cuentasRecordadas",
-        JSON.stringify(
-            cuentas
-        )
-    );
-
-}
-
-
-// =================================
-// ABRIR SELECTOR DE CUENTAS
-// =================================
-
-async function abrirSelectorCuentas() {
-
-    listaCuentas.innerHTML =
-        "";
-
-
-    const cuentas =
-        JSON.parse(
-            localStorage.getItem(
-                "cuentasRecordadas"
-            )
-        ) || [];
-
-
-    const resultadoSesion =
-        await clienteSupabase.auth.getSession();
-
-
-    const sesion =
-        resultadoSesion.data.session;
-
-
-    let usuarioActualId =
-        null;
-
-
-    if (
-        sesion
-    ) {
-
-        usuarioActualId =
-            sesion.user.id;
-
-    }
-
-
-    // =================================
-    // RECORRER CUENTAS
-    // =================================
-
-    for (
-        let i = 0;
-        i < cuentas.length;
-        i++
-    ) {
-
-        const cuenta =
-            cuentas[i];
-
-
-        const tarjeta =
-            document.createElement(
-                "button"
-            );
-
-
-        tarjeta.type =
-            "button";
-
-
-        tarjeta.classList.add(
-            "cuenta-guardada"
-        );
-
-
-        // =================================
-        // ICONO / FOTO
-        // =================================
-
-        const icono =
-            document.createElement(
-                "div"
-            );
-
-
-        icono.classList.add(
-            "cuenta-guardada-icono"
-        );
-
-
-        if (
-            cuenta.fotoUrl
-        ) {
-
-            const resultadoFoto =
-                await clienteSupabase
-                    .storage
-                    .from("perfiles")
-                    .createSignedUrl(
-                        cuenta.fotoUrl,
-                        3600
-                    );
-
-
-            if (
-                !resultadoFoto.error &&
-                resultadoFoto.data
-            ) {
-
-                const imagen =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                imagen.classList.add(
-                    "cuenta-guardada-foto"
-                );
-
-
-                imagen.src =
-                    resultadoFoto.data.signedUrl;
-
-
-                imagen.alt =
-                    "Foto de perfil";
-
-
-                icono.appendChild(
-                    imagen
-                );
-
-            }
-
-            else {
-
-                icono.textContent =
-                    "👤";
-
-            }
-
-        }
-
-        else {
-
-            icono.textContent =
-                "👤";
-
-        }
-
-
-        // =================================
-        // INFORMACIÓN
-        // =================================
-
-        const info =
-            document.createElement(
-                "div"
-            );
-
-
-        info.classList.add(
-            "cuenta-guardada-info"
-        );
-
-
-        const nombre =
-            document.createElement(
-                "strong"
-            );
-
-
-        nombre.classList.add(
-            "cuenta-guardada-nombre"
-        );
-
-
-        nombre.textContent =
-            cuenta.nombre;
-
-
-        const correo =
-            document.createElement(
-                "span"
-            );
-
-
-        correo.classList.add(
-            "cuenta-guardada-correo"
-        );
-
-
-        correo.textContent =
-            cuenta.email;
-
-
-        info.appendChild(
-            nombre
-        );
-
-
-        info.appendChild(
-            correo
-        );
-
-
-        tarjeta.appendChild(
-            icono
-        );
-
-
-        tarjeta.appendChild(
-            info
-        );
-
-
-        // =================================
-        // CUENTA ACTUAL
-        // =================================
-
-        if (
-            cuenta.id ===
-            usuarioActualId
-        ) {
-
-            const actual =
-                document.createElement(
-                    "span"
-                );
-
-
-            actual.classList.add(
-                "cuenta-actual-texto"
-            );
-
-
-            actual.textContent =
-                "Actual";
-
-
-            tarjeta.appendChild(
-                actual
-            );
-
-        }
-
-
-        // =================================
-        // ELEGIR CUENTA
-        // =================================
-
-        tarjeta.addEventListener(
-            "click",
-            function() {
-
-                elegirCuenta(
-                    cuenta
-                );
-
-            }
-        );
-
-
-        listaCuentas.appendChild(
-            tarjeta
-        );
-
-    }
-
-
-    modalElegirCuenta.style.display =
-        "flex";
-
-}
-
-
-// =================================
-// ELEGIR CUENTA
-// =================================
-
-async function elegirCuenta(
-    cuenta
-) {
-
-    const resultadoSesion =
-        await clienteSupabase.auth.getSession();
-
-
-    const sesion =
-        resultadoSesion.data.session;
-
-
-    // =================================
-    // YA ESTÁ USANDO ESA CUENTA
-    // =================================
-
-    if (
-        sesion &&
-        sesion.user.id === cuenta.id
-    ) {
-
-        cerrarModalElegirCuenta();
-
-        return;
-
-    }
-
-
-    // =================================
-    // CERRAR SESIÓN ACTUAL
-    // =================================
-
-    
-
-    const resultadoCerrar =
-        await clienteSupabase.auth.signOut();
-
-
-    if (
-        resultadoCerrar.error
-    ) {
-
-return;
-
-    }
-
-
-    cerrarModalElegirCuenta();
-
-
-    cerrarModalCuenta();
-
-
-    // =================================
-    // MOSTRAR LOGIN
-    // =================================
-
-    mostrarLogin();
-
-
-    formRegistro.style.display =
-        "none";
-
-
-    formLogin.style.display =
-        "block";
-
-
-    registroLogin.style.display =
-        "block";
-
-
-    usuario.value =
-        cuenta.email;
-
-
-    contrasena.value =
-        "";
-
-
-    contrasena.focus();
-
-
-    mensajeLogin.textContent =
-        "Escribe la contraseña para entrar a esta cuenta.";
-
-}
-
-
-// =================================
-// AGREGAR NUEVA CUENTA DESDE SELECTOR
-// =================================
-
-btnNuevaCuenta.addEventListener(
-    "click",
-    async function() {
-
-        const resultado =
-            await clienteSupabase.auth.signOut();
-
-
-        if (
-            resultado.error
-        ) {
-
-return;
-
-        }
-
-
-        cerrarModalElegirCuenta();
-
-
-        cerrarModalCuenta();
-
-
-        mostrarLogin();
-
-
-        usuario.value =
-            "";
-
-
-        contrasena.value =
-            "";
-
-
-        mensajeLogin.textContent =
-            "";
-
-
-        formLogin.style.display =
-            "block";
-
-
-        registroLogin.style.display =
-            "block";
-
-
-        formRegistro.style.display =
-            "none";
-
-    }
-);
-
-
-// =================================
-// CERRAR SELECTOR DE CUENTAS
-// =================================
-
-cerrarElegirCuenta.addEventListener(
-    "click",
-    cerrarModalElegirCuenta
-);
-
-
-function cerrarModalElegirCuenta() {
-
-    modalElegirCuenta.style.display =
-        "none";
 
 }
 
@@ -7262,25 +6536,182 @@ btnExplorarLogin.addEventListener(
     }
 );
 
-//FUNCION IMPORTANTE DE CARGAR ESCRITOS PUBLICOS
+// =================================
+// DATOS Y VISTAS DE EXPLORAR
+// =================================
+
+function mostrarVistaExplorar(
+    vista
+) {
+
+    vistaExplorarActual =
+        vista;
+
+    vistaExplorarInicio.style.display =
+        vista === "inicio"
+            ? "block"
+            : "none";
+
+    vistaExplorarTodos.style.display =
+        vista === "todos"
+            ? "block"
+            : "none";
+
+    vistaExplorarAutores.style.display =
+        vista === "autores"
+            ? "block"
+            : "none";
+
+    vistaExplorarAutorDetalle.style.display =
+        vista === "autor-detalle"
+            ? "block"
+            : "none";
+
+    explorarVacio.style.display =
+        "none";
+
+    if (
+        vista === "inicio"
+    ) {
+
+        renderPortadaExplorar();
+
+    }
+
+    if (
+        vista === "todos"
+    ) {
+
+        aplicarBusquedaExplorar();
+
+    }
+
+    if (
+        vista === "autores"
+    ) {
+
+        aplicarBusquedaExplorar();
+
+    }
+
+}
+
+
+btnExplorarPortada.addEventListener(
+    "click",
+    function() {
+
+        buscadorExplorar.value = "";
+        actualizarXBuscadorExplorar();
+        mostrarVistaExplorar("inicio");
+
+    }
+);
+
+
+function volverAPortadaExplorar() {
+
+    buscadorExplorar.value = "";
+    actualizarXBuscadorExplorar();
+    vistaExplorarAntesBusqueda = "inicio";
+    autorExplorarActualId = null;
+    mostrarVistaExplorar("inicio");
+
+}
+
+
+btnVolverExplorarDesdeTodos.addEventListener(
+    "click",
+    volverAPortadaExplorar
+);
+
+
+btnVolverExplorarDesdeAutores.addEventListener(
+    "click",
+    volverAPortadaExplorar
+);
+
+
+btnExplorarTodos.addEventListener(
+    "click",
+    function() {
+
+        buscadorExplorar.value = "";
+        actualizarXBuscadorExplorar();
+        vistaExplorarAntesBusqueda = "todos";
+        vistaExplorarAntesBusqueda = "todos";
+        mostrarVistaExplorar("todos");
+
+    }
+);
+
+
+btnVerTodosRecientes.addEventListener(
+    "click",
+    function() {
+
+        buscadorExplorar.value = "";
+        actualizarXBuscadorExplorar();
+        mostrarVistaExplorar("todos");
+
+    }
+);
+
+
+btnExplorarAutores.addEventListener(
+    "click",
+    function() {
+
+        buscadorExplorar.value = "";
+        actualizarXBuscadorExplorar();
+        vistaExplorarAntesBusqueda = "autores";
+        mostrarVistaExplorar("autores");
+
+    }
+);
+
+
+cerrarAutorExplorar.addEventListener(
+    "click",
+    function() {
+
+        autorExplorarActualId =
+            null;
+
+        mostrarVistaExplorar(
+            "autores"
+        );
+
+    }
+);
+
 
 async function cargarExplorar() {
 
     explorarCargando.style.display =
         "block";
 
+    explorarCargando.textContent =
+        "Cargando escritos...";
 
     explorarVacio.style.display =
         "none";
 
-
     listaExplorar.innerHTML =
         "";
 
+    listaExplorarRecientes.innerHTML =
+        "";
 
-    // =================================
-    // CARGAR ESCRITOS PÚBLICOS
-    // =================================
+    listaExplorarPopulares.innerHTML =
+        "";
+
+    listaAutoresExplorar.innerHTML =
+        "";
+
+    listaAutorEscritos.innerHTML =
+        "";
+
 
     const resultadoEscritos =
         await clienteSupabase
@@ -7315,12 +6746,11 @@ async function cargarExplorar() {
             resultadoEscritos.error
         );
 
-
         explorarCargando.textContent =
             "No se pudieron cargar los escritos.";
 
-
         return;
+
     }
 
 
@@ -7328,32 +6758,23 @@ async function cargarExplorar() {
         resultadoEscritos.data || [];
 
 
-    // =================================
-    // NO HAY ESCRITOS
-    // =================================
-
     if (
         escritosPublicos.length === 0
     ) {
 
-        escritosExplorar =
-            [];
-
+        escritosExplorar = [];
+        autoresExplorar = [];
 
         explorarCargando.style.display =
             "none";
 
-
         explorarVacio.style.display =
             "block";
 
-
         return;
+
     }
 
-    // =================================
-    // CARGAR LIKES
-    // =================================
 
     const idsEscritos =
         escritosPublicos.map(
@@ -7377,6 +6798,10 @@ async function cargarExplorar() {
             );
 
 
+    const likes =
+        resultadoLikes.data || [];
+
+
     if (
         resultadoLikes.error
     ) {
@@ -7389,14 +6814,6 @@ async function cargarExplorar() {
     }
 
 
-    const likes =
-        resultadoLikes.data || [];
-
-    
-    // =================================
-    // CARGAR COMENTARIOS
-    // =================================
-
     const resultadoComentarios =
         await clienteSupabase
             .from("comentarios")
@@ -7407,6 +6824,10 @@ async function cargarExplorar() {
                 "escrito_id",
                 idsEscritos
             );
+
+
+    const comentarios =
+        resultadoComentarios.data || [];
 
 
     if (
@@ -7421,65 +6842,44 @@ async function cargarExplorar() {
     }
 
 
-    const comentarios =
-        resultadoComentarios.data || [];
-
-
-    // =================================
-    // CONTAR COMENTARIOS POR ESCRITO
-    // =================================
-
-    const comentariosPorEscrito =
+    const likesPorEscrito =
         new Map();
 
-
-    comentarios.forEach(
-        function(comentario) {
-
-            const cantidadActual =
-                comentariosPorEscrito.get(
-                    comentario.escrito_id
-                ) || 0;
-
-
-            comentariosPorEscrito.set(
-                comentario.escrito_id,
-                cantidadActual + 1
-            );
-
-        }
-);
-
-
-    // =================================
-    // CONTAR LIKES POR ESCRITO
-    // =================================
-
-    const likesPorEscrito =
+    const comentariosPorEscrito =
         new Map();
 
 
     likes.forEach(
         function(like) {
 
-            const cantidadActual =
-                likesPorEscrito.get(
-                    like.escrito_id
-                ) || 0;
-
-
             likesPorEscrito.set(
                 like.escrito_id,
-                cantidadActual + 1
+                (
+                    likesPorEscrito.get(
+                        like.escrito_id
+                    ) || 0
+                ) + 1
             );
 
         }
-);
+    );
 
 
-    // =================================
-    // OBTENER AUTORES
-    // =================================
+    comentarios.forEach(
+        function(comentario) {
+
+            comentariosPorEscrito.set(
+                comentario.escrito_id,
+                (
+                    comentariosPorEscrito.get(
+                        comentario.escrito_id
+                    ) || 0
+                ) + 1
+            );
+
+        }
+    );
+
 
     const idsAutores =
         [
@@ -7499,12 +6899,16 @@ async function cargarExplorar() {
         await clienteSupabase
             .from("perfiles")
             .select(
-                "id, username, nombre_autor, foto_url"
+                "id, username, nombre_autor, descripcion, foto_url"
             )
             .in(
                 "id",
                 idsAutores
             );
+
+
+    const autores =
+        resultadoAutores.data || [];
 
 
     if (
@@ -7517,10 +6921,6 @@ async function cargarExplorar() {
         );
 
     }
-
-
-    const autores =
-        resultadoAutores.data || [];
 
 
     const autoresPorId =
@@ -7539,9 +6939,17 @@ async function cargarExplorar() {
     );
 
 
-    // =================================
-    // UNIR ESCRITOS + AUTOR
-    // =================================
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+    const sesion =
+        resultadoSesion.data.session;
+
+    const usuarioActualId =
+        sesion
+            ? sesion.user.id
+            : null;
+
 
     escritosExplorar =
         escritosPublicos.map(
@@ -7552,77 +6960,223 @@ async function cargarExplorar() {
                         escrito.usuario_id
                     );
 
+                const cantidadLikes =
+                    likesPorEscrito.get(
+                        escrito.id
+                    ) || 0;
+
+                const cantidadComentarios =
+                    comentariosPorEscrito.get(
+                        escrito.id
+                    ) || 0;
 
                 return {
-
-                    id:
-                        escrito.id,
-
-                    usuario_id:
-                        escrito.usuario_id,
-
-                    titulo:
-                        escrito.titulo,
-
-                    descripcion:
-                        escrito.descripcion || "",
-
-                    fecha_creacion:
-                        escrito.fecha_creacion,
-
-                    share_id:
-                        escrito.share_id,
-
-                    tipo:
-                        escrito.tipo,
-
-                    cantidad_likes:
-                        likesPorEscrito.get(
-                            escrito.id
-                        ) || 0,
-
-                    cantidad_comentarios:
-                        comentariosPorEscrito.get(
-                            escrito.id
-                        ) || 0,
-
-                    nombre_autor:
-                        autor
-                            ? (
-                                autor.nombre_autor ||
-                                autor.username ||
-                                "Autor"
-                            )
-                            : "Autor",
-
-                    username:
-                        autor
-                            ? autor.username
-                            : ""
-
+                    id: escrito.id,
+                    usuario_id: escrito.usuario_id,
+                    titulo: escrito.titulo,
+                    descripcion: escrito.descripcion || "",
+                    fecha_creacion: escrito.fecha_creacion,
+                    share_id: escrito.share_id,
+                    tipo: escrito.tipo,
+                    cantidad_likes: cantidadLikes,
+                    cantidad_comentarios: cantidadComentarios,
+                    popularidad: cantidadLikes + cantidadComentarios,
+                    me_gusta: usuarioActualId
+                        ? likes.some(
+                            function(like) {
+                                return (
+                                    like.escrito_id === escrito.id &&
+                                    like.usuario_id === usuarioActualId
+                                );
+                            }
+                        )
+                        : false,
+                    nombre_autor: autor
+                        ? (
+                            autor.nombre_autor ||
+                            autor.username ||
+                            "Autor"
+                        )
+                        : "Autor",
+                    username: autor
+                        ? autor.username || ""
+                        : "",
+                    autor_descripcion: autor
+                        ? autor.descripcion || ""
+                        : "",
+                    autor_foto_url: autor
+                        ? autor.foto_url || ""
+                        : ""
                 };
 
             }
         );
 
 
+    autoresExplorar =
+        construirAutoresExplorar(
+            escritosExplorar
+        );
+
+
     explorarCargando.style.display =
         "none";
 
+    renderPortadaExplorar();
 
-    mostrarEscritosExplorar(
-        escritosExplorar
+}
+
+
+function construirAutoresExplorar(
+    lista
+) {
+
+    const mapa =
+        new Map();
+
+
+    lista.forEach(
+        function(escrito) {
+
+            if (
+                !mapa.has(
+                    escrito.usuario_id
+                )
+            ) {
+
+                mapa.set(
+                    escrito.usuario_id,
+                    {
+                        id: escrito.usuario_id,
+                        nombre_autor: escrito.nombre_autor,
+                        username: escrito.username,
+                        descripcion: escrito.autor_descripcion,
+                        foto_url: escrito.autor_foto_url,
+                        cantidad_escritos: 0
+                    }
+                );
+
+            }
+
+
+            mapa.get(
+                escrito.usuario_id
+            ).cantidad_escritos += 1;
+
+        }
+    );
+
+
+    return Array.from(
+        mapa.values()
+    ).sort(
+        function(a, b) {
+
+            return a.nombre_autor.localeCompare(
+                b.nombre_autor,
+                "es"
+            );
+
+        }
     );
 
 }
 
-//CREAR TARJETAS REALES 
+
+function renderPortadaExplorar() {
+
+    listaExplorarRecientes.innerHTML =
+        "";
+
+    listaExplorarPopulares.innerHTML =
+        "";
+
+
+    const recientes =
+        escritosExplorar.slice(
+            0,
+            5
+        );
+
+
+    recientes.forEach(
+        function(escrito) {
+
+            crearTarjetaExplorar(
+                escrito,
+                listaExplorarRecientes,
+                true
+            );
+
+        }
+    );
+
+
+    const populares =
+        escritosExplorar
+            .filter(
+                function(escrito) {
+
+                    return escrito.popularidad > 0;
+
+                }
+            )
+            .sort(
+                function(a, b) {
+
+                    if (
+                        b.popularidad !== a.popularidad
+                    ) {
+
+                        return b.popularidad - a.popularidad;
+
+                    }
+
+                    return new Date(
+                        b.fecha_creacion
+                    ) - new Date(
+                        a.fecha_creacion
+                    );
+
+                }
+            )
+            .slice(
+                0,
+                5
+            );
+
+
+    explorarPopularesVacio.style.display =
+        populares.length === 0
+            ? "block"
+            : "none";
+
+
+    populares.forEach(
+        function(escrito) {
+
+            crearTarjetaExplorar(
+                escrito,
+                listaExplorarPopulares,
+                true
+            );
+
+        }
+    );
+
+}
+
 
 function mostrarEscritosExplorar(
-    lista
+    lista,
+    destino
 ) {
 
-    listaExplorar.innerHTML =
+    const contenedor =
+        destino || listaExplorar;
+
+
+    contenedor.innerHTML =
         "";
 
 
@@ -7630,11 +7184,17 @@ function mostrarEscritosExplorar(
         lista.length === 0
     ) {
 
-        explorarVacio.style.display =
-            "block";
+        if (
+            contenedor === listaExplorar
+        ) {
 
+            explorarVacio.style.display =
+                "block";
+
+        }
 
         return;
+
     }
 
 
@@ -7646,7 +7206,9 @@ function mostrarEscritosExplorar(
         function(escrito) {
 
             crearTarjetaExplorar(
-                escrito
+                escrito,
+                contenedor,
+                false
             );
 
         }
@@ -7654,10 +7216,11 @@ function mostrarEscritosExplorar(
 
 }
 
-//BLOQUE 2 DE CREAR TARJETAS REALES
 
 function crearTarjetaExplorar(
-    escrito
+    escrito,
+    destino,
+    destacada
 ) {
 
     const tarjeta =
@@ -7665,26 +7228,29 @@ function crearTarjetaExplorar(
             "article"
         );
 
-
     tarjeta.classList.add(
         "tarjeta-explorar"
     );
 
+    if (
+        destacada
+    ) {
 
-    // =================================
-    // AUTOR
-    // =================================
+        tarjeta.classList.add(
+            "tarjeta-explorar-destacada"
+        );
+
+    }
+
 
     const autor =
         document.createElement(
             "button"
         );
 
-
     autor.classList.add(
         "explorar-autor"
     );
-
 
     autor.textContent =
         escrito.nombre_autor;
@@ -7695,70 +7261,45 @@ function crearTarjetaExplorar(
 
     autor.addEventListener(
         "click",
-        async function(event) {
+        function(event) {
 
             event.stopPropagation();
 
-
-            if (
-                !escrito.username
-            ) {
-
-                return;
-            }
-
-
-            await abrirPerfilDesdeExplorar(
-                escrito.username
+            mostrarDetalleAutorExplorar(
+                escrito.usuario_id
             );
 
         }
-);
+    );
 
-
-    // =================================
-    // TÍTULO
-    // =================================
 
     const titulo =
         document.createElement(
             "h3"
         );
 
-
     titulo.textContent =
         escrito.titulo;
 
-
-    // =================================
-    // DESCRIPCIÓN
-    // =================================
 
     const descripcion =
         document.createElement(
             "p"
         );
 
-
     descripcion.classList.add(
         "explorar-descripcion"
     );
-
 
     descripcion.textContent =
         escrito.descripcion ||
         "Este escrito todavía no tiene descripción.";
 
 
-    // =================================
-    // PIE
-    // =================================
-
     const pie =
         document.createElement(
             "div"
         );
-
 
     pie.classList.add(
         "explorar-pie"
@@ -7769,7 +7310,6 @@ function crearTarjetaExplorar(
         document.createElement(
             "span"
         );
-
 
     fecha.textContent =
         formatearFecha(
@@ -7782,7 +7322,6 @@ function crearTarjetaExplorar(
             "div"
         );
 
-
     interacciones.classList.add(
         "explorar-interacciones"
     );
@@ -7793,26 +7332,18 @@ function crearTarjetaExplorar(
             "button"
         );
 
-
     like.type =
         "button";
-
 
     like.classList.add(
         "btn-like-explorar"
     );
 
-
     like.innerHTML =
-    `
-        <span>
-            ${escrito.me_gusta ? "♥" : "♡"}
-        </span>
-
-        <strong>
-            ${escrito.cantidad_likes}
-        </strong>
-    `;
+        `
+            <span>${escrito.me_gusta ? "♥" : "♡"}</span>
+            <strong>${escrito.cantidad_likes}</strong>
+        `;
 
 
     if (
@@ -7826,98 +7357,83 @@ function crearTarjetaExplorar(
     }
 
 
-    // =================================
-    // DAR / QUITAR LIKE
-    // =================================
-
     like.addEventListener(
         "click",
         async function(event) {
 
             event.stopPropagation();
 
-
             await alternarLike(
                 escrito,
                 like
             );
 
+            escrito.popularidad =
+                escrito.cantidad_likes +
+                escrito.cantidad_comentarios;
+
         }
     );
 
-
-    interacciones.appendChild(
-        like
-    );
 
     const comentariosInfo =
         document.createElement(
             "span"
         );
 
-
     comentariosInfo.classList.add(
         "comentarios-info-explorar"
     );
 
-
     comentariosInfo.innerHTML =
         `
-            <span>
-                💬
-            </span>
-
-            <strong>
-                ${escrito.cantidad_comentarios}
-            </strong>
+            <span>💬</span>
+            <strong>${escrito.cantidad_comentarios}</strong>
         `;
 
 
     interacciones.appendChild(
-        comentariosInfo
-);
-
-        pie.appendChild(
-            fecha
-        );
-
-
-        pie.appendChild(
-            interacciones
+        like
     );
 
+    interacciones.appendChild(
+        comentariosInfo
+    );
 
-    // =================================
-    // ARMAR TARJETA
-    // =================================
+    pie.appendChild(
+        fecha
+    );
+
+    pie.appendChild(
+        interacciones
+    );
 
     tarjeta.appendChild(
         autor
     );
 
-
     tarjeta.appendChild(
         titulo
     );
 
-
     tarjeta.appendChild(
         descripcion
     );
-
 
     tarjeta.appendChild(
         pie
     );
 
 
-    // =================================
-    // ABRIR ESCRITO
-    // =================================
-
     tarjeta.addEventListener(
         "click",
         async function() {
+
+            vistaExplorarRegresoLectura =
+                vistaExplorarActual;
+
+            autorExplorarRegresoLecturaId =
+                autorExplorarActualId;
 
             await abrirEscritoDesdeExplorar(
                 escrito.share_id
@@ -7927,8 +7443,349 @@ function crearTarjetaExplorar(
     );
 
 
-    listaExplorar.appendChild(
+    (
+        destino || listaExplorar
+    ).appendChild(
         tarjeta
+    );
+
+}
+
+
+function crearTarjetaAutorExplorar(
+    autor
+) {
+
+    const tarjeta =
+        document.createElement(
+            "button"
+        );
+
+    tarjeta.type =
+        "button";
+
+    tarjeta.classList.add(
+        "tarjeta-autor-explorar"
+    );
+
+
+    const carpeta =
+        document.createElement(
+            "div"
+        );
+
+    carpeta.classList.add(
+        "autor-carpeta-icono"
+    );
+
+    carpeta.textContent =
+        "📁";
+
+
+    const info =
+        document.createElement(
+            "div"
+        );
+
+    info.classList.add(
+        "autor-carpeta-info"
+    );
+
+
+    const nombre =
+        document.createElement(
+            "strong"
+        );
+
+    nombre.textContent =
+        autor.nombre_autor;
+
+
+    const usuario =
+        document.createElement(
+            "span"
+        );
+
+    usuario.textContent =
+        autor.username
+            ? "@" + autor.username
+            : "Autor de VersoLibre";
+
+
+    const cantidad =
+        document.createElement(
+            "small"
+        );
+
+    cantidad.textContent =
+        autor.cantidad_escritos === 1
+            ? "1 escrito público"
+            : autor.cantidad_escritos + " escritos públicos";
+
+
+    info.appendChild(
+        nombre
+    );
+
+    info.appendChild(
+        usuario
+    );
+
+    info.appendChild(
+        cantidad
+    );
+
+    tarjeta.appendChild(
+        carpeta
+    );
+
+    tarjeta.appendChild(
+        info
+    );
+
+
+    tarjeta.addEventListener(
+        "click",
+        function() {
+
+            mostrarDetalleAutorExplorar(
+                autor.id
+            );
+
+        }
+    );
+
+
+    listaAutoresExplorar.appendChild(
+        tarjeta
+    );
+
+}
+
+
+function renderAutoresExplorar(
+    lista
+) {
+
+    listaAutoresExplorar.innerHTML =
+        "";
+
+
+    if (
+        lista.length === 0
+    ) {
+
+        explorarVacio.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    explorarVacio.style.display =
+        "none";
+
+
+    lista.forEach(
+        function(autor) {
+
+            crearTarjetaAutorExplorar(
+                autor
+            );
+
+        }
+    );
+
+}
+
+
+function mostrarDetalleAutorExplorar(
+    autorId
+) {
+
+    const autor =
+        autoresExplorar.find(
+            function(item) {
+
+                return item.id === autorId;
+
+            }
+        );
+
+
+    if (
+        !autor
+    ) {
+
+        return;
+
+    }
+
+
+    autorExplorarActualId =
+        autorId;
+
+    vistaExplorarActual =
+        "autor-detalle";
+
+    vistaExplorarInicio.style.display =
+        "none";
+
+    vistaExplorarTodos.style.display =
+        "none";
+
+    vistaExplorarAutores.style.display =
+        "none";
+
+    vistaExplorarAutorDetalle.style.display =
+        "block";
+
+    explorarVacio.style.display =
+        "none";
+
+
+    tituloAutorExplorar.textContent =
+        autor.nombre_autor;
+
+    subtituloAutorExplorar.textContent =
+        autor.cantidad_escritos === 1
+            ? "1 escrito público"
+            : autor.cantidad_escritos + " escritos públicos";
+
+
+    const escritosAutor =
+        escritosExplorar.filter(
+            function(escrito) {
+
+                return escrito.usuario_id === autorId;
+
+            }
+        );
+
+
+    mostrarEscritosExplorar(
+        escritosAutor,
+        listaAutorEscritos
+    );
+
+}
+
+
+function aplicarBusquedaExplorar() {
+
+    const termino =
+        buscadorExplorar.value
+            .trim()
+            .toLowerCase();
+
+
+    if (
+        vistaExplorarActual === "autores"
+    ) {
+
+        const autoresFiltrados =
+            autoresExplorar.filter(
+                function(autor) {
+
+                    return (
+                        (
+                            autor.nombre_autor || ""
+                        ).toLowerCase().includes(
+                            termino
+                        ) ||
+                        (
+                            autor.username || ""
+                        ).toLowerCase().includes(
+                            termino
+                        )
+                    );
+
+                }
+            );
+
+        renderAutoresExplorar(
+            autoresFiltrados
+        );
+
+        return;
+
+    }
+
+
+    const escritosFiltrados =
+        escritosExplorar.filter(
+            function(escrito) {
+
+                return (
+                    (
+                        escrito.titulo || ""
+                    ).toLowerCase().includes(
+                        termino
+                    ) ||
+                    (
+                        escrito.nombre_autor || ""
+                    ).toLowerCase().includes(
+                        termino
+                    ) ||
+                    (
+                        escrito.username || ""
+                    ).toLowerCase().includes(
+                        termino
+                    )
+                );
+
+            }
+        );
+
+
+    if (
+        vistaExplorarActual === "inicio" &&
+        termino !== ""
+    ) {
+
+        vistaExplorarAntesBusqueda =
+            "inicio";
+
+        vistaExplorarActual =
+            "todos";
+
+        vistaExplorarInicio.style.display =
+            "none";
+
+        vistaExplorarTodos.style.display =
+            "block";
+
+    }
+
+
+    if (
+        vistaExplorarActual === "autor-detalle" &&
+        autorExplorarActualId
+    ) {
+
+        const escritosAutor =
+            escritosFiltrados.filter(
+                function(escrito) {
+
+                    return escrito.usuario_id === autorExplorarActualId;
+
+                }
+            );
+
+        mostrarEscritosExplorar(
+            escritosAutor,
+            listaAutorEscritos
+        );
+
+        return;
+
+    }
+
+
+    mostrarEscritosExplorar(
+        escritosFiltrados,
+        listaExplorar
     );
 
 }
@@ -8306,79 +8163,16 @@ async function abrirEscritoDesdeExplorar(
 
 }
 
-//BUSCADOR EN LA PESTAÑA DE EXPLORAR
+// =================================
+// BUSCADOR DE EXPLORAR
+// =================================
 
 buscadorExplorar.addEventListener(
     "input",
     function() {
 
-        const termino =
-            buscadorExplorar
-                .value
-                .trim()
-                .toLowerCase();
-
-
-        if (
-            termino === ""
-        ) {
-
-            mostrarEscritosExplorar(
-                escritosExplorar
-            );
-
-
-            return;
-        }
-
-
-        const filtrados =
-            escritosExplorar.filter(
-                function(escrito) {
-
-                    const titulo =
-                        (
-                            escrito.titulo ||
-                            ""
-                        )
-                        .toLowerCase();
-
-
-                    const autor =
-                        (
-                            escrito.nombre_autor ||
-                            ""
-                        )
-                        .toLowerCase();
-
-
-                    const username =
-                        (
-                            escrito.username ||
-                            ""
-                        )
-                        .toLowerCase();
-
-
-                    return (
-                        titulo.includes(
-                            termino
-                        ) ||
-                        autor.includes(
-                            termino
-                        ) ||
-                        username.includes(
-                            termino
-                        )
-                    );
-
-                }
-            );
-
-
-        mostrarEscritosExplorar(
-            filtrados
-        );
+        actualizarXBuscadorExplorar();
+        aplicarBusquedaExplorar();
 
     }
 );
@@ -8394,12 +8188,6 @@ function actualizarXBuscadorExplorar() {
 }
 
 
-buscadorExplorar.addEventListener(
-    "input",
-    actualizarXBuscadorExplorar
-);
-
-
 limpiarBuscadorExplorar.addEventListener(
     "click",
     function() {
@@ -8407,65 +8195,41 @@ limpiarBuscadorExplorar.addEventListener(
         buscadorExplorar.value =
             "";
 
-
         actualizarXBuscadorExplorar();
 
+        if (
+            vistaExplorarAntesBusqueda === "inicio" &&
+            vistaExplorarActual === "todos"
+        ) {
 
-        mostrarEscritosExplorar(
-            escritosExplorar
-        );
+            mostrarVistaExplorar(
+                "inicio"
+            );
 
+        }
+
+        else if (
+            vistaExplorarActual === "inicio"
+        ) {
+
+            renderPortadaExplorar();
+
+        }
+
+        else {
+
+            aplicarBusquedaExplorar();
+
+        }
+
+        vistaExplorarAntesBusqueda =
+            vistaExplorarActual;
 
         buscadorExplorar.focus();
 
     }
 );
 
-
-//abrir perfil desde explorar
-
-async function abrirPerfilDesdeExplorar(
-    username
-) {
-
-    if (
-        !username
-    ) {
-
-        return;
-    }
-
-
-    const url =
-        new URL(
-            window.location.href
-        );
-
-
-    url.searchParams.delete(
-        "escrito"
-    );
-
-
-    url.searchParams.set(
-        "autor",
-        username
-    );
-
-
-    window.history.pushState(
-        {},
-        "",
-        url.pathname +
-        url.search
-    );
-
-
-    await abrirPerfilPublicoDesdeURL(
-        username
-    );
-
-}
 
 //COMENTARIOS TODO
 
@@ -11112,7 +10876,9 @@ async function cerrarModalLectura() {
             "enlace";
 
 
-        await mostrarExplorar();
+        await mostrarExplorar(
+            true
+        );
 
 
         return;
@@ -11830,20 +11596,6 @@ window.addEventListener(
 
 
         // =================================
-        // ELEGIR CUENTA
-        // =================================
-
-        if (
-            event.target ===
-            modalElegirCuenta
-        ) {
-
-            cerrarModalElegirCuenta();
-
-        }
-
-
-        // =================================
         // PERFIL PÚBLICO
         // =================================
 
@@ -11853,20 +11605,6 @@ window.addEventListener(
         ) {
 
             cerrarModalPerfilPublico();
-
-        }
-
-
-        // =================================
-        // CONTRASEÑA
-        // =================================
-
-        if (
-            event.target ===
-            modalContrasena
-        ) {
-
-            cerrarModalContrasena();
 
         }
 
