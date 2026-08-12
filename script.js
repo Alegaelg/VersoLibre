@@ -18,6 +18,10 @@ const clienteSupabase =
 // =================================
 // ELEMENTOS
 // =================================
+const btnLoginGoogle =
+    document.getElementById(
+        "btn-login-google"
+    );
 
 const btnLoginVolverInicio =
     document.getElementById(
@@ -679,40 +683,7 @@ const estadoCompartir =
         "estado-compartir"
     );
 
-const formRegistro =
-    document.getElementById(
-        "form-registro"
-    );
 
-const registroEmail =
-    document.getElementById(
-        "registro-email"
-    );
-
-const registroContrasena =
-    document.getElementById(
-        "registro-contrasena"
-    );
-
-const mensajeRegistro =
-    document.getElementById(
-        "mensaje-registro"
-    );
-
-const btnMostrarRegistro =
-    document.getElementById(
-        "btn-mostrar-registro"
-    );
-
-const btnVolverLogin =
-    document.getElementById(
-        "btn-volver-login"
-    );
-
-const registroLogin =
-    document.getElementById(
-        "registro-login"
-    );
 
 let escritoCompartiendo = null;
 
@@ -761,25 +732,6 @@ const btnInicioVerExplorar =
         "btn-inicio-ver-explorar"
     );
 
-const formLogin =
-    document.getElementById(
-        "form-login"
-    );
-
-const usuario =
-    document.getElementById(
-        "usuario"
-    );
-
-const contrasena =
-    document.getElementById(
-        "contrasena"
-    );
-
-const mensajeLogin =
-    document.getElementById(
-        "mensaje-login"
-    );
 
 
 const btnSubir =
@@ -5251,9 +5203,32 @@ async function cargarSaludoUsuario() {
 
 btnAgregarCuenta.addEventListener(
     "click",
-    function() {
+    async function() {
 
-        abrirSelectorCuentas();
+        const resultado =
+            await clienteSupabase.auth.signOut();
+
+
+        if (
+            resultado.error
+        ) {
+
+            console.log(
+                "Error al preparar cambio de cuenta:",
+                resultado.error
+            );
+
+
+            return;
+
+        }
+
+
+        modalCuenta.style.display =
+            "none";
+
+
+        mostrarLogin();
 
     }
 );
@@ -6961,271 +6936,30 @@ return;
 // LOGIN
 // =================================
 
-formLogin.addEventListener(
-    "submit",
-    async function(event) {
 
-        event.preventDefault();
-
-
-        const email =
-            usuario.value.trim();
-
-
-        const password =
-            contrasena.value;
-
-
-        mensajeLogin.textContent =
-            "Iniciando sesión...";
-
-
-        const resultado =
-            await clienteSupabase.auth.signInWithPassword({
-
-                email:
-                    email,
-
-                password:
-                    password
-
-            });
-
-
-        // =================================
-        // PRIMERO COMPROBAR ERROR
-        // =================================
-
-        if (
-            resultado.error
-        ) {
-
-            mensajeLogin.textContent =
-                "Correo o contraseña incorrectos.";
-
-
-return;
-
-        }
-
-
-        mensajeLogin.textContent =
-            "";
-
-
-        // =================================
-        // RECORDAR CUENTA
-        // =================================
-
-        const usuarioLogueado =
-            resultado.data.user;
-
-
-        if (
-            usuarioLogueado
-        ) {
-
-            const resultadoPerfil =
-                await clienteSupabase
-                    .from("perfiles")
-                    .select(
-                        "nombre_autor, foto_url"
-                    )
-                    .eq(
-                        "id",
-                        usuarioLogueado.id
-                    )
-                    .maybeSingle();
-
-
-            let nombreCuenta =
-                usuarioLogueado.email;
-
-
-            if (
-                resultadoPerfil.data &&
-                resultadoPerfil.data.nombre_autor
-            ) {
-
-                nombreCuenta =
-                    resultadoPerfil.data.nombre_autor;
-
-            }
-
-
-            let fotoCuenta =
-                null;
-
-
-            if (
-                resultadoPerfil.data &&
-                resultadoPerfil.data.foto_url
-            ) {
-
-                fotoCuenta =
-                    resultadoPerfil.data.foto_url;
-
-            }
-
-
-            recordarCuenta(
-                usuarioLogueado.id,
-                usuarioLogueado.email,
-                nombreCuenta,
-                fotoCuenta
-            );
-
-        }
-
-
-        // =================================
-        // ENLACE COMPARTIDO
-        // =================================
-
-        const shareId =
-            obtenerShareIdDeURL();
-
-
-        if (
-            shareId
-        ) {
-
-            modoEscritoCompartido =
-                true;
-
-
-            shareIdPendiente =
-                shareId;
-
-
-            return;
-
-        }
-
-
-        mostrarPortafolio();
-
-    }
-);
 
 
 // =================================
 // REGISTRO
 // =================================
 
-formRegistro.addEventListener(
-    "submit",
-    async function(event) {
 
-        event.preventDefault();
-
-
-        const email =
-            registroEmail.value.trim();
-
-
-        const password =
-            registroContrasena.value;
-
-
-        mensajeRegistro.textContent =
-            "Creando cuenta...";
-
-
-        const resultado =
-            await clienteSupabase.auth.signUp({
-
-                email:
-                    email,
-
-                password:
-                    password,
-
-                options: {
-
-                    emailRedirectTo:
-                        "https://alegaelg.github.io/VersoLibre/"
-
-                }
-
-    });
-
-
-        if (
-            resultado.error
-        ) {
-
-            mensajeRegistro.textContent =
-                resultado.error.message;
-
-
-            return;
-
-        }
-
-
-        mensajeRegistro.textContent =
-            "Cuenta creada correctamente. Revisa tu correo si Supabase solicita confirmación.";
-
-    }
-);
 
 
 // =================================
 // MOSTRAR REGISTRO
 // =================================
 
-btnMostrarRegistro.addEventListener(
-    "click",
-    function() {
-
-        formLogin.style.display =
-            "none";
-
-
-        registroLogin.style.display =
-            "none";
-
-
-        formRegistro.style.display =
-            "block";
-
-
-        mensajeRegistro.textContent =
-            "";
-
-    }
-);
 
 
 // =================================
 // VOLVER AL LOGIN
 // =================================
 
-btnVolverLogin.addEventListener(
-    "click",
-    function() {
-
-        formRegistro.style.display =
-            "none";
 
 
-        formLogin.style.display =
-            "block";
 
-
-        registroLogin.style.display =
-            "block";
-
-
-        mensajeLogin.textContent =
-            "";
-
-    }
-);
-
-
-/// =================================
+// =================================
 // CERRAR SESIÓN
 // =================================
 
@@ -7239,44 +6973,20 @@ async function cerrarSesion() {
         resultado.error
     ) {
 
+        console.log(
+            "Error al cerrar sesión:",
+            resultado.error
+        );
+
+
         return;
 
     }
 
 
-    usuario.value =
-        "";
-
-
-    contrasena.value =
-        "";
-
-
     await mostrarInicioPublico();
 
 }
-
-// =================================
-// BOTONES DEL INICIO PÚBLICO
-// =================================
-
-btnVolverInicio.addEventListener(
-    "click",
-    function() {
-
-        mostrarInicioPublico();
-
-    }
-);
-
-btnInicioLogin.addEventListener(
-    "click",
-    function() {
-
-        mostrarLogin();
-
-    }
-);
 
 
 btnInicioEscritorio.addEventListener(
@@ -12680,9 +12390,55 @@ btnExplorarVolverInicio.addEventListener(
 
 btnLoginVolverInicio.addEventListener(
     "click",
+    function() {
+
+        mostrarInicioPublico();
+
+    }
+);
+
+btnLoginGoogle.addEventListener(
+    "click",
     async function() {
 
-        await mostrarInicioPublico();
+        const resultado =
+            await clienteSupabase.auth.signInWithOAuth({
+                provider:
+                    "google",
+
+                options: {
+
+                    redirectTo:
+                        "https://alegaelg.github.io/VersoLibre/",
+
+                    queryParams: {
+                        prompt:
+                            "select_account"
+                    }
+
+                }
+            });
+
+
+        if (
+            resultado.error
+        ) {
+
+            console.log(
+                "Error al iniciar con Google:",
+                resultado.error
+            );
+
+        }
+
+    }
+);
+
+btnInicioLogin.addEventListener(
+    "click",
+    function() {
+
+        mostrarLogin();
 
     }
 );
