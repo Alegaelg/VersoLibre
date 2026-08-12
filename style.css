@@ -6930,3 +6930,307 @@ body {
     }
 
 }
+
+/* ================================= */
+/* LOGIN CON GOOGLE */
+/* ================================= */
+
+.btn-login-google {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 13px 15px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid var(--borde);
+
+    border-radius: 10px;
+
+    background-color: var(--superficie);
+
+    color: var(--texto);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.btn-login-google:hover {
+    background-color: var(--tarjeta-hover);
+
+    border-color: var(--principal);
+}
+
+
+.google-icono {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 22px;
+
+    height: 22px;
+
+    border-radius: 50%;
+
+    background-color: white;
+
+    color: #333;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* ================================= */
+/* SEPARADOR */
+/* ================================= */
+
+.separador-login {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.separador-login span {
+    flex: 1;
+
+    height: 1px;
+
+    background-color: var(--borde);
+}
+
+
+.separador-login p {
+    margin: 0;
+
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+}
+
+/* ================================= */
+/* ACCESO A VERSOLIBRE */
+/* ================================= */
+
+.login-contenido {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 38px 40px;
+
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+
+    background-color: var(--tarjeta);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+
+.btn-login-volver-inicio {
+    padding: 0;
+    margin-bottom: 34px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--texto-secundario);
+
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.btn-login-volver-inicio:hover {
+    color: var(--principal);
+}
+
+
+.login-marca {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 38px;
+
+    color: var(--texto);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.login-logo {
+    width: 28px;
+    height: 28px;
+
+    object-fit: contain;
+}
+
+
+.login-principal {
+    margin-bottom: 32px;
+}
+
+
+.login-etiqueta {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--principal);
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+
+.login-principal h1 {
+    margin: 0 0 14px;
+
+    color: var(--texto);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 32px;
+    line-height: 1.12;
+
+    text-align: left;
+}
+
+
+.login-principal p {
+    margin: 0;
+
+    color: var(--texto-secundario);
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    text-align: left;
+}
+
+
+.btn-login-google {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 14px 16px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: var(--principal);
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        opacity 0.2s;
+}
+
+
+.btn-login-google:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+
+.google-icono {
+    width: 21px;
+    height: 21px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: white;
+
+    color: #333;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.login-nota {
+    margin: 15px 0 0;
+
+    color: var(--texto-secundario);
+
+    font-size: 10px;
+
+    text-align: center;
+
+    opacity: 0.75;
+}
+
+
+@media (max-width: 600px) {
+
+    .login-contenido {
+        max-width: calc(100% - 32px);
+
+        padding:
+            30px 25px;
+    }
+
+
+    .login-principal h1 {
+        font-size: 28px;
+    }
+
+}
