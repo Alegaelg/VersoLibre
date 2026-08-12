@@ -290,12 +290,7 @@
     style="display: none;"
 >
 
-    <!-- ========================= -->
-    <!-- HEADER -->
-    <!-- ========================= -->
-
     <header class="explorar-header">
-
         <div class="explorar-nav">
 
             <button
@@ -303,141 +298,75 @@
                 class="explorar-marca"
                 type="button"
             >
-
-                <img
-                    src="VersoLibre.png"
-                    alt="VersoLibre"
-                >
-
-                <span>
-                    VersoLibre
-                </span>
-
+                <img src="VersoLibre.png" alt="VersoLibre">
+                <span>VersoLibre</span>
             </button>
-
 
             <div class="explorar-nav-acciones">
-
-                <button
-                    id="btn-explorar-volver-inicio"
-                    type="button"
-                    class="btn-nav-publico"
-                >
+                <button id="btn-explorar-volver-inicio" type="button" class="btn-nav-publico">
                     Inicio
-            </button>
+                </button>
 
-                <button
-                    id="btn-explorar-escritorio"
-                    type="button"
-                    class="btn-nav-publico"
-                >
+                <button id="btn-explorar-portada" type="button" class="btn-nav-publico">
+                    Explorar
+                </button>
+
+                <button id="btn-explorar-escritorio" type="button" class="btn-nav-publico">
                     Mi escritorio
                 </button>
 
-
-                <button
-                    id="btn-explorar-login"
-                    type="button"
-                    class="btn-inicio-sesion"
-                >
+                <button id="btn-explorar-login" type="button" class="btn-inicio-sesion">
                     Iniciar sesión
                 </button>
 
-            
-
-<div
-                id="cuenta-explorar"
-                class="cuenta-nav"
-                style="display: none;"
-            >
-
-                <button
-                    id="btn-cuenta-explorar"
-                    class="btn-cuenta-nav"
-                    type="button"
-                >
-                    <span id="nombre-cuenta-explorar">
-                        Hola
-                    </span>
-
-                    <span class="flecha-cuenta">
-                        ▾
-                    </span>
-                </button>
-
-
-                <div
-                    id="menu-cuenta-explorar"
-                    class="menu-cuenta-nav"
-                >
-
-                    <button
-                        id="btn-menu-mi-cuenta-explorar"
-                        type="button"
-                    >
-                         Mi cuenta
+                <div id="cuenta-explorar" class="cuenta-nav" style="display: none;">
+                    <button id="btn-cuenta-explorar" class="btn-cuenta-nav" type="button">
+                        <span id="nombre-cuenta-explorar">Hola</span>
+                        <span class="flecha-cuenta">▾</span>
                     </button>
 
-
-                    <div class="menu-cuenta-linea">
+                    <div id="menu-cuenta-explorar" class="menu-cuenta-nav">
+                        <button id="btn-menu-mi-cuenta-explorar" type="button">
+                            Mi cuenta
+                        </button>
+                        <div class="menu-cuenta-linea"></div>
+                        <button id="btn-menu-cerrar-sesion-explorar" type="button" class="menu-cerrar-sesion">
+                            Cerrar sesión
+                        </button>
                     </div>
-
-
-                    <button
-                        id="btn-menu-cerrar-sesion-explorar"
-                        type="button"
-                        class="menu-cerrar-sesion"
-                    >
-                        Cerrar sesión
-                    </button>
-
                 </div>
-
             </div>
-
-</div>
-
-                
-
         </div>
-
-        
-
-
-
     </header>
-
-
-    <!-- ========================= -->
-    <!-- CONTENIDO -->
-    <!-- ========================= -->
 
     <main class="explorar-contenido">
 
-        <section class="explorar-cabecera">
-
-            <span class="inicio-etiqueta">
-                Comunidad
-            </span>
-
-            <h1>
-                Explorar escritos
-            </h1>
-
+        <section class="explorar-cabecera explorar-cabecera-principal">
+            <span class="inicio-etiqueta">Comunidad</span>
+            <h1>Descubre nuevas voces.</h1>
             <p>
-                Descubre textos que otros autores
-                han decidido compartir públicamente.
+                Explora lo más reciente, encuentra textos que están generando conversación
+                y descubre autores de la comunidad de VersoLibre.
             </p>
 
+            <div class="explorar-accesos-pagina">
+                <button id="btn-explorar-todos" type="button" class="explorar-acceso-pagina">
+                    <span>Todos los escritos</span>
+                    <small>Explora la biblioteca pública completa</small>
+                </button>
+
+                <button id="btn-explorar-autores" type="button" class="explorar-acceso-pagina">
+                    <span>Buscar por autor</span>
+                    <small>Encuentra los escritos públicos de cada autor</small>
+                </button>
+            </div>
 
             <div class="explorar-buscador">
-
                 <input
                     type="text"
                     id="buscador-explorar"
                     placeholder="Buscar por título o autor..."
                 >
-
                 <button
                     id="limpiar-buscador-explorar"
                     class="btn-limpiar-buscador btn-limpiar-buscador-explorar"
@@ -447,58 +376,91 @@
                 >
                     &times;
                 </button>
-
             </div>
-
         </section>
 
-
-        <!-- ========================= -->
-        <!-- ESTADO CARGANDO -->
-        <!-- ========================= -->
-
-        <div
-            id="explorar-cargando"
-            class="explorar-estado"
-        >
+        <div id="explorar-cargando" class="explorar-estado">
             Cargando escritos...
         </div>
 
+        <!-- PORTADA DE EXPLORAR -->
+        <section id="vista-explorar-inicio" class="vista-explorar">
+            <div class="explorar-bloque-destacado">
+                <div class="explorar-bloque-cabecera">
+                    <div>
+                        <span class="inicio-etiqueta">Ahora mismo</span>
+                        <h2>Más recientes</h2>
+                    </div>
+                    <button id="btn-ver-todos-recientes" type="button" class="explorar-enlace-ver">
+                        Ver todos
+                    </button>
+                </div>
+                <div id="lista-explorar-recientes" class="lista-explorar-destacada"></div>
+            </div>
 
-        <!-- ========================= -->
-        <!-- GRID -->
-        <!-- ========================= -->
-
-        <section
-            id="lista-explorar"
-            class="lista-explorar"
-        >
+            <div id="bloque-explorar-populares" class="explorar-bloque-destacado">
+                <div class="explorar-bloque-cabecera">
+                    <div>
+                        <span class="inicio-etiqueta">Comunidad</span>
+                        <h2>Más populares</h2>
+                    </div>
+                </div>
+                <p class="explorar-bloque-explicacion">
+                    Escritos con likes o comentarios de la comunidad.
+                </p>
+                <div id="lista-explorar-populares" class="lista-explorar-destacada"></div>
+                <div id="explorar-populares-vacio" class="explorar-mini-vacio" style="display: none;">
+                    Aún no hay escritos con interacciones.
+                </div>
+            </div>
         </section>
 
+        <!-- TODOS LOS ESCRITOS -->
+        <section id="vista-explorar-todos" class="vista-explorar" style="display: none;">
+            <div class="explorar-vista-cabecera">
+                <button id="btn-volver-explorar-desde-todos" type="button" class="btn-volver-explorar-portada">
+                    ← Volver a Explorar
+                </button>
+                <span class="inicio-etiqueta">Biblioteca pública</span>
+                <h2>Todos los escritos</h2>
+                <p>Ordenados del más reciente al más antiguo.</p>
+            </div>
 
-        <!-- ========================= -->
-        <!-- VACÍO -->
-        <!-- ========================= -->
+            <section id="lista-explorar" class="lista-explorar"></section>
+        </section>
 
-        <div
-            id="explorar-vacio"
-            class="explorar-estado"
-            style="display: none;"
-        >
+        <!-- AUTORES -->
+        <section id="vista-explorar-autores" class="vista-explorar" style="display: none;">
+            <div class="explorar-vista-cabecera">
+                <button id="btn-volver-explorar-desde-autores" type="button" class="btn-volver-explorar-portada">
+                    ← Volver a Explorar
+                </button>
+                <span class="inicio-etiqueta">Autores</span>
+                <h2>Explorar por autor</h2>
+                <p>Solo aparecen autores que tienen al menos un escrito público.</p>
+            </div>
 
-            <span>
-                📖
-            </span>
+            <section id="lista-autores-explorar" class="lista-autores-explorar"></section>
+        </section>
 
-            <h3>
-                Todavía no hay escritos públicos
-            </h3>
+        <!-- ESCRITOS DE UN AUTOR -->
+        <section id="vista-explorar-autor-detalle" class="vista-explorar" style="display: none;">
+            <div class="explorar-autor-detalle-cabecera">
+                <button id="cerrar-autor-explorar" type="button" class="cerrar-autor-explorar" aria-label="Volver a autores">
+                    &times;
+                </button>
+                <span class="inicio-etiqueta">Autor</span>
+                <h2 id="titulo-autor-explorar">Escritos del autor</h2>
+                <p id="subtitulo-autor-explorar"></p>
+            </div>
 
-            <p>
-                Cuando los autores publiquen textos,
-                aparecerán aquí.
-            </p>
+            <section id="lista-autor-escritos" class="lista-explorar"></section>
+        </section>
 
+        <div id="explorar-vacio" class="explorar-estado" style="display: none;">
+            <span>📖</span>
+            <h3>No encontramos resultados</h3>
+            <p>Prueba con otro título o nombre de autor.</p>
         </div>
 
     </main>
@@ -1362,32 +1324,6 @@
                 </strong>
 
             </div>
-
-
-            <div class="cuenta-dato">
-
-                <span class="cuenta-etiqueta">
-                    Contraseña
-                </span>
-
-                <div class="cuenta-contrasena">
-
-                    <strong>
-                        ••••••••••
-                    </strong>
-
-                    <button
-                        id="btn-cambiar-contrasena"
-                        type="button"
-                    >
-                        Cambiar
-                    </button>
-
-                </div>
-
-            </div>
-
-
             <div class="cuenta-dato">
 
                 <span class="cuenta-etiqueta">
@@ -1521,78 +1457,6 @@
 
 </div>
 
-<div
-    id="modal-contrasena"
-    class="modal"
-    style="display: none;"
->
-
-    <div class="modal-contenido modal-contrasena-contenido">
-
-        <button
-            id="cerrar-contrasena"
-            class="cerrar-modal"
-            type="button"
-        >
-            &times;
-        </button>
-
-
-        <h2>Cambiar contraseña</h2>
-
-        <p>
-            Escribe tu nueva contraseña
-            y confírmala.
-        </p>
-
-
-        <div class="campo">
-
-            <label for="nueva-contrasena">
-                Nueva contraseña
-            </label>
-
-            <input
-                type="password"
-                id="nueva-contrasena"
-                placeholder="Nueva contraseña"
-            >
-
-        </div>
-
-
-        <div class="campo campo-confirmar-contrasena">
-
-            <label for="confirmar-contrasena">
-                Confirmar contraseña
-            </label>
-
-            <input
-                type="password"
-                id="confirmar-contrasena"
-                placeholder="Repite la contraseña"
-            >
-
-        </div>
-
-
-        <p
-            id="mensaje-contrasena"
-            class="mensaje-contrasena"
-        ></p>
-
-
-        <button
-            id="btn-guardar-contrasena"
-            class="btn-confirmar"
-            type="button"
-        >
-            Cambiar contraseña
-        </button>
-</div>
-
-</div>
-
 <!-- ================================= -->
 <!-- PERFIL PÚBLICO DEL AUTOR -->
 <!-- ================================= -->
@@ -1675,54 +1539,6 @@
             escritos públicos.
 
         </div>
-
-    </div>
-
-</div>
-
-    <!-- ================================= -->
-<!-- ELEGIR CUENTA -->
-<!-- ================================= -->
-
-<div
-    id="modal-elegir-cuenta"
-    class="modal"
-    style="display: none;"
->
-
-    <div class="modal-contenido modal-elegir-cuenta-contenido">
-
-        <button
-            id="cerrar-elegir-cuenta"
-            class="cerrar-modal"
-            type="button"
-        >
-            &times;
-        </button>
-
-
-        <h2>Elegir cuenta</h2>
-
-        <p>
-            Selecciona una cuenta guardada
-            en este dispositivo.
-        </p>
-
-
-        <div
-            id="lista-cuentas"
-            class="lista-cuentas"
-        >
-        </div>
-
-
-        <button
-            id="btn-nueva-cuenta"
-            class="btn-nueva-cuenta"
-            type="button"
-        >
-            ＋ Agregar otra cuenta
-        </button>
 
     </div>
 
