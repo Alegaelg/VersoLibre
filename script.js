@@ -19,6 +19,211 @@ const clienteSupabase =
 // ELEMENTOS
 // =================================
 
+const btnLoginVolverInicio =
+    document.getElementById(
+        "btn-login-volver-inicio"
+    );
+
+const btnExplorarVolverInicio =
+    document.getElementById(
+        "btn-explorar-volver-inicio"
+    );
+
+const btnCerrarSesionCuenta =
+    document.getElementById(
+        "btn-cerrar-sesion-cuenta"
+    );
+
+const btnIrExplorar =
+    document.getElementById(
+        "btn-ir-explorar"
+    );
+
+const cuentaExplorar =
+    document.getElementById(
+        "cuenta-explorar"
+    );
+
+
+const btnCuentaExplorar =
+    document.getElementById(
+        "btn-cuenta-explorar"
+    );
+
+
+const nombreCuentaExplorar =
+    document.getElementById(
+        "nombre-cuenta-explorar"
+    );
+
+
+const btnMenuMiCuentaExplorar =
+    document.getElementById(
+        "btn-menu-mi-cuenta-explorar"
+    );
+
+
+const btnMenuCerrarSesionExplorar =
+    document.getElementById(
+        "btn-menu-cerrar-sesion-explorar"
+    );
+
+const cuentaInicio =
+    document.getElementById(
+        "cuenta-inicio"
+    );
+
+
+const btnCuentaInicio =
+    document.getElementById(
+        "btn-cuenta-inicio"
+    );
+
+
+const nombreCuentaInicio =
+    document.getElementById(
+        "nombre-cuenta-inicio"
+    );
+
+
+const btnMenuMiCuenta =
+    document.getElementById(
+        "btn-menu-mi-cuenta"
+    );
+
+
+const btnMenuCerrarSesion =
+    document.getElementById(
+        "btn-menu-cerrar-sesion"
+    );
+
+const seccionComentarios =
+    document.getElementById(
+        "seccion-comentarios"
+    );
+
+
+const listaComentarios =
+    document.getElementById(
+        "lista-comentarios"
+    );
+
+
+const sinComentarios =
+    document.getElementById(
+        "sin-comentarios"
+    );
+
+
+const contadorComentarios =
+    document.getElementById(
+        "contador-comentarios"
+    );
+
+
+const formularioComentario =
+    document.getElementById(
+        "formulario-comentario"
+    );
+
+
+const inputComentario =
+    document.getElementById(
+        "input-comentario"
+    );
+
+
+const contadorCaracteresComentario =
+    document.getElementById(
+        "contador-caracteres-comentario"
+    );
+
+
+const btnPublicarComentario =
+    document.getElementById(
+        "btn-publicar-comentario"
+    );
+
+const seccionInteraccionesLectura =
+    document.getElementById(
+        "seccion-interacciones-lectura"
+    );
+
+
+const btnLikeLectura =
+    document.getElementById(
+        "btn-like-lectura"
+    );
+
+
+const iconoLikeLectura =
+    document.getElementById(
+        "icono-like-lectura"
+    );
+
+
+const contadorLikeLectura =
+    document.getElementById(
+        "contador-like-lectura"
+    );
+
+const pantallaExplorar =
+    document.getElementById(
+        "pantalla-explorar"
+    );
+
+
+const btnExplorarInicio =
+    document.getElementById(
+        "btn-explorar-inicio"
+    );
+
+
+const btnExplorarEscritorio =
+    document.getElementById(
+        "btn-explorar-escritorio"
+    );
+
+
+const btnExplorarLogin =
+    document.getElementById(
+        "btn-explorar-login"
+    );
+
+
+const buscadorExplorar =
+    document.getElementById(
+        "buscador-explorar"
+    );
+
+const limpiarBuscadorExplorar =
+    document.getElementById(
+        "limpiar-buscador-explorar"
+    );
+
+
+const listaExplorar =
+    document.getElementById(
+        "lista-explorar"
+    );
+
+
+const explorarCargando =
+    document.getElementById(
+        "explorar-cargando"
+    );
+
+
+const explorarVacio =
+    document.getElementById(
+        "explorar-vacio"
+    );
+
+const btnVolverInicio =
+    document.getElementById(
+        "btn-volver-inicio"
+    );
+
 const btnVerMiPerfil =
     document.getElementById(
         "btn-ver-mi-perfil"
@@ -272,9 +477,13 @@ const perfilPublicoVacio =
 
 //variables globales
 
-// =================================
-// ESTADO DEL EDITOR
-// =================================
+let escritoComentariosActual =
+    null;
+
+let escritoLikeLectura =
+    null;
+
+let escritosExplorar = [];
 
 let modoEditor =
     "nuevo";
@@ -517,6 +726,41 @@ const pantallaPortafolio =
         "pantalla-portafolio"
     );
 
+const pantallaInicio =
+    document.getElementById(
+        "pantalla-inicio"
+    );
+
+
+const btnInicioLogin =
+    document.getElementById(
+        "btn-inicio-login"
+    );
+
+
+const btnInicioEscritorio =
+    document.getElementById(
+        "btn-inicio-escritorio"
+    );
+
+
+const btnInicioEmpezar =
+    document.getElementById(
+        "btn-inicio-empezar"
+    );
+
+
+const btnInicioExplorar =
+    document.getElementById(
+        "btn-inicio-explorar"
+    );
+
+
+const btnInicioVerExplorar =
+    document.getElementById(
+        "btn-inicio-ver-explorar"
+    );
+
 const formLogin =
     document.getElementById(
         "form-login"
@@ -537,10 +781,6 @@ const mensajeLogin =
         "mensaje-login"
     );
 
-const btnCerrarSesion =
-    document.getElementById(
-        "btn-cerrar-sesion"
-    );
 
 const btnSubir =
     document.getElementById(
@@ -598,6 +838,11 @@ const contadorEscritos =
 const buscador =
     document.getElementById(
         "buscador"
+    );
+
+const limpiarBuscador =
+    document.getElementById(
+        "limpiar-buscador"
     );
 
 const modalLectura =
@@ -679,6 +924,9 @@ let db;
 let modoEscritoCompartido = false;
 
 let shareIdPendiente = null;
+
+let origenLecturaCompartida =
+    "enlace";
 
 //pop universal
 
@@ -3049,6 +3297,28 @@ function obtenerAutorIdDeURL() {
 
 }
 
+async function mostrarInicioPublico() {
+
+    pantallaInicio.style.display =
+        "block";
+
+
+    pantallaLogin.style.display =
+        "none";
+
+
+    pantallaPortafolio.style.display =
+        "none";
+
+
+    pantallaExplorar.style.display =
+        "none";
+
+
+    await actualizarCuentaInicio();
+
+}
+
 
 // =================================
 // MOSTRAR SOLO EL LOGIN
@@ -3056,10 +3326,16 @@ function obtenerAutorIdDeURL() {
 
 function mostrarLogin() {
 
+    pantallaInicio.style.display =
+        "none";
+
     pantallaLogin.style.display =
         "flex";
 
     pantallaPortafolio.style.display =
+        "none";
+
+    pantallaExplorar.style.display = 
         "none";
 
 }
@@ -3071,15 +3347,52 @@ function mostrarLogin() {
 
 async function mostrarPortafolio() {
 
+    pantallaInicio.style.display =
+        "none";
+
     pantallaLogin.style.display =
         "none";
 
     pantallaPortafolio.style.display =
         "block";
 
+    pantallaExplorar.style.display = 
+        "none";
+
     await cargarEscritosSupabase();
 
     await cargarSaludoUsuario();
+
+}
+
+//mostrarExplorar
+
+async function mostrarExplorar() {
+
+    pantallaInicio.style.display =
+        "none";
+
+
+    pantallaLogin.style.display =
+        "none";
+
+
+    pantallaPortafolio.style.display =
+        "none";
+
+
+    pantallaExplorar.style.display =
+        "block";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    await actualizarCuentaExplorar();
+
+    await cargarExplorar();
 
 }
 
@@ -4621,6 +4934,8 @@ async function abrirEscritoDesdePerfil(
     shareIdPendiente =
         shareId;
 
+    origenLecturaCompartida =
+        "perfil";
 
     await comprobarEscritoCompartido();
 
@@ -5532,6 +5847,8 @@ async function elegirCuenta(
     // CERRAR SESIÓN ACTUAL
     // =================================
 
+    
+
     const resultadoCerrar =
         await clienteSupabase.auth.signOut();
 
@@ -5941,9 +6258,19 @@ function mostrarEscritoCompartido(
 
     }
 
+    cargarLikeLectura(
+        escrito
+);
+
+    cargarComentarios(
+        escrito
+    );
+
 
     modalLectura.style.display =
         "flex";
+
+    
 
 }
 
@@ -6359,18 +6686,13 @@ async function comprobarSesion() {
         sesion
     ) {
 
-        mostrarPortafolio();
+        await mostrarPortafolio();
 
     }
 
     else {
 
-        pantallaLogin.style.display =
-            "flex";
-
-
-        pantallaPortafolio.style.display =
-            "none";
+        mostrarInicioPublico();
 
     }
 
@@ -6409,23 +6731,15 @@ clienteSupabase.auth.onAuthStateChange(
         // =================================
         // PÁGINA NORMAL
         // =================================
+        // No cambiamos de vista por TOKEN_REFRESHED,
+        // INITIAL_SESSION o al volver a la pestaña.
+        // Así Explorar permanece abierto.
 
         if (
-            sesion
+            evento === "SIGNED_OUT"
         ) {
 
-            mostrarPortafolio();
-
-        }
-
-        else {
-
-            pantallaLogin.style.display =
-                "flex";
-
-
-            pantallaPortafolio.style.display =
-                "none";
+            await mostrarInicioPublico();
 
         }
 
@@ -6911,36 +7225,2004 @@ btnVolverLogin.addEventListener(
 );
 
 
-// =================================
+/// =================================
 // CERRAR SESIÓN
 // =================================
 
-btnCerrarSesion.addEventListener(
+async function cerrarSesion() {
+
+    const resultado =
+        await clienteSupabase.auth.signOut();
+
+
+    if (
+        resultado.error
+    ) {
+
+        return;
+
+    }
+
+
+    usuario.value =
+        "";
+
+
+    contrasena.value =
+        "";
+
+
+    await mostrarInicioPublico();
+
+}
+
+// =================================
+// BOTONES DEL INICIO PÚBLICO
+// =================================
+
+btnVolverInicio.addEventListener(
+    "click",
+    function() {
+
+        mostrarInicioPublico();
+
+    }
+);
+
+btnInicioLogin.addEventListener(
+    "click",
+    function() {
+
+        mostrarLogin();
+
+    }
+);
+
+
+btnInicioEscritorio.addEventListener(
     "click",
     async function() {
 
         const resultado =
-            await clienteSupabase.auth.signOut();
+            await clienteSupabase.auth.getSession();
+
+
+        const sesion =
+            resultado.data.session;
+
+
+        if (
+            sesion
+        ) {
+
+            await mostrarPortafolio();
+
+        }
+
+        else {
+
+            mostrarLogin();
+
+        }
+
+    }
+);
+
+
+btnInicioEmpezar.addEventListener(
+    "click",
+    async function() {
+
+        const resultado =
+            await clienteSupabase.auth.getSession();
+
+
+        const sesion =
+            resultado.data.session;
+
+
+        if (
+            sesion
+        ) {
+
+            await mostrarPortafolio();
+
+
+        }
+
+        else {
+
+            mostrarLogin();
+
+        }
+
+    }
+);
+
+//FUNCION PARA IR A EXPLORAR
+
+btnInicioExplorar.addEventListener(
+    "click",
+    async function() {
+
+        await mostrarExplorar();
+
+    }
+);
+
+
+btnInicioVerExplorar.addEventListener(
+    "click",
+    async function() {
+
+        await mostrarExplorar();
+
+    }
+);
+
+// Navegacion de explorar
+
+btnExplorarInicio.addEventListener(
+    "click",
+    function() {
+
+        mostrarInicioPublico();
+
+    }
+);
+
+
+btnExplorarEscritorio.addEventListener(
+    "click",
+    async function() {
+
+        const resultado =
+            await clienteSupabase.auth.getSession();
+
+
+        const sesion =
+            resultado.data.session;
+
+
+        if (
+            sesion
+        ) {
+
+            await mostrarPortafolio();
+
+        }
+
+        else {
+
+            mostrarLogin();
+
+        }
+
+    }
+);
+
+
+btnExplorarLogin.addEventListener(
+    "click",
+    function() {
+
+        mostrarLogin();
+
+    }
+);
+
+//FUNCION IMPORTANTE DE CARGAR ESCRITOS PUBLICOS
+
+async function cargarExplorar() {
+
+    explorarCargando.style.display =
+        "block";
+
+
+    explorarVacio.style.display =
+        "none";
+
+
+    listaExplorar.innerHTML =
+        "";
+
+
+    // =================================
+    // CARGAR ESCRITOS PÚBLICOS
+    // =================================
+
+    const resultadoEscritos =
+        await clienteSupabase
+            .from("escritos")
+            .select(
+                "id, usuario_id, titulo, descripcion, fecha_creacion, share_id, tipo"
+            )
+            .eq(
+                "privacidad",
+                "publico"
+            )
+            .not(
+                "share_id",
+                "is",
+                null
+            )
+            .order(
+                "fecha_creacion",
+                {
+                    ascending:
+                        false
+                }
+            );
+
+
+    if (
+        resultadoEscritos.error
+    ) {
+
+        console.log(
+            "Error al cargar Explorar:",
+            resultadoEscritos.error
+        );
+
+
+        explorarCargando.textContent =
+            "No se pudieron cargar los escritos.";
+
+
+        return;
+    }
+
+
+    const escritosPublicos =
+        resultadoEscritos.data || [];
+
+
+    // =================================
+    // NO HAY ESCRITOS
+    // =================================
+
+    if (
+        escritosPublicos.length === 0
+    ) {
+
+        escritosExplorar =
+            [];
+
+
+        explorarCargando.style.display =
+            "none";
+
+
+        explorarVacio.style.display =
+            "block";
+
+
+        return;
+    }
+
+    // =================================
+    // CARGAR LIKES
+    // =================================
+
+    const idsEscritos =
+        escritosPublicos.map(
+            function(escrito) {
+
+                return escrito.id;
+
+            }
+        );
+
+
+    const resultadoLikes =
+        await clienteSupabase
+            .from("likes")
+            .select(
+                "escrito_id, usuario_id"
+            )
+            .in(
+                "escrito_id",
+                idsEscritos
+            );
+
+
+    if (
+        resultadoLikes.error
+    ) {
+
+        console.log(
+            "Error al cargar likes:",
+            resultadoLikes.error
+        );
+
+    }
+
+
+    const likes =
+        resultadoLikes.data || [];
+
+    
+    // =================================
+    // CARGAR COMENTARIOS
+    // =================================
+
+    const resultadoComentarios =
+        await clienteSupabase
+            .from("comentarios")
+            .select(
+                "escrito_id"
+            )
+            .in(
+                "escrito_id",
+                idsEscritos
+            );
+
+
+    if (
+        resultadoComentarios.error
+    ) {
+
+        console.log(
+            "Error al cargar comentarios de Explorar:",
+            resultadoComentarios.error
+        );
+
+    }
+
+
+    const comentarios =
+        resultadoComentarios.data || [];
+
+
+    // =================================
+    // CONTAR COMENTARIOS POR ESCRITO
+    // =================================
+
+    const comentariosPorEscrito =
+        new Map();
+
+
+    comentarios.forEach(
+        function(comentario) {
+
+            const cantidadActual =
+                comentariosPorEscrito.get(
+                    comentario.escrito_id
+                ) || 0;
+
+
+            comentariosPorEscrito.set(
+                comentario.escrito_id,
+                cantidadActual + 1
+            );
+
+        }
+);
+
+
+    // =================================
+    // CONTAR LIKES POR ESCRITO
+    // =================================
+
+    const likesPorEscrito =
+        new Map();
+
+
+    likes.forEach(
+        function(like) {
+
+            const cantidadActual =
+                likesPorEscrito.get(
+                    like.escrito_id
+                ) || 0;
+
+
+            likesPorEscrito.set(
+                like.escrito_id,
+                cantidadActual + 1
+            );
+
+        }
+);
+
+
+    // =================================
+    // OBTENER AUTORES
+    // =================================
+
+    const idsAutores =
+        [
+            ...new Set(
+                escritosPublicos.map(
+                    function(escrito) {
+
+                        return escrito.usuario_id;
+
+                    }
+                )
+            )
+        ];
+
+
+    const resultadoAutores =
+        await clienteSupabase
+            .from("perfiles")
+            .select(
+                "id, username, nombre_autor, foto_url"
+            )
+            .in(
+                "id",
+                idsAutores
+            );
+
+
+    if (
+        resultadoAutores.error
+    ) {
+
+        console.log(
+            "Error al cargar autores:",
+            resultadoAutores.error
+        );
+
+    }
+
+
+    const autores =
+        resultadoAutores.data || [];
+
+
+    const autoresPorId =
+        new Map();
+
+
+    autores.forEach(
+        function(autor) {
+
+            autoresPorId.set(
+                autor.id,
+                autor
+            );
+
+        }
+    );
+
+
+    // =================================
+    // UNIR ESCRITOS + AUTOR
+    // =================================
+
+    escritosExplorar =
+        escritosPublicos.map(
+            function(escrito) {
+
+                const autor =
+                    autoresPorId.get(
+                        escrito.usuario_id
+                    );
+
+
+                return {
+
+                    id:
+                        escrito.id,
+
+                    usuario_id:
+                        escrito.usuario_id,
+
+                    titulo:
+                        escrito.titulo,
+
+                    descripcion:
+                        escrito.descripcion || "",
+
+                    fecha_creacion:
+                        escrito.fecha_creacion,
+
+                    share_id:
+                        escrito.share_id,
+
+                    tipo:
+                        escrito.tipo,
+
+                    cantidad_likes:
+                        likesPorEscrito.get(
+                            escrito.id
+                        ) || 0,
+
+                    cantidad_comentarios:
+                        comentariosPorEscrito.get(
+                            escrito.id
+                        ) || 0,
+
+                    nombre_autor:
+                        autor
+                            ? (
+                                autor.nombre_autor ||
+                                autor.username ||
+                                "Autor"
+                            )
+                            : "Autor",
+
+                    username:
+                        autor
+                            ? autor.username
+                            : ""
+
+                };
+
+            }
+        );
+
+
+    explorarCargando.style.display =
+        "none";
+
+
+    mostrarEscritosExplorar(
+        escritosExplorar
+    );
+
+}
+
+//CREAR TARJETAS REALES 
+
+function mostrarEscritosExplorar(
+    lista
+) {
+
+    listaExplorar.innerHTML =
+        "";
+
+
+    if (
+        lista.length === 0
+    ) {
+
+        explorarVacio.style.display =
+            "block";
+
+
+        return;
+    }
+
+
+    explorarVacio.style.display =
+        "none";
+
+
+    lista.forEach(
+        function(escrito) {
+
+            crearTarjetaExplorar(
+                escrito
+            );
+
+        }
+    );
+
+}
+
+//BLOQUE 2 DE CREAR TARJETAS REALES
+
+function crearTarjetaExplorar(
+    escrito
+) {
+
+    const tarjeta =
+        document.createElement(
+            "article"
+        );
+
+
+    tarjeta.classList.add(
+        "tarjeta-explorar"
+    );
+
+
+    // =================================
+    // AUTOR
+    // =================================
+
+    const autor =
+        document.createElement(
+            "button"
+        );
+
+
+    autor.classList.add(
+        "explorar-autor"
+    );
+
+
+    autor.textContent =
+        escrito.nombre_autor;
+
+    autor.type =
+        "button";
+
+
+    autor.addEventListener(
+        "click",
+        async function(event) {
+
+            event.stopPropagation();
+
+
+            if (
+                !escrito.username
+            ) {
+
+                return;
+            }
+
+
+            await abrirPerfilDesdeExplorar(
+                escrito.username
+            );
+
+        }
+);
+
+
+    // =================================
+    // TÍTULO
+    // =================================
+
+    const titulo =
+        document.createElement(
+            "h3"
+        );
+
+
+    titulo.textContent =
+        escrito.titulo;
+
+
+    // =================================
+    // DESCRIPCIÓN
+    // =================================
+
+    const descripcion =
+        document.createElement(
+            "p"
+        );
+
+
+    descripcion.classList.add(
+        "explorar-descripcion"
+    );
+
+
+    descripcion.textContent =
+        escrito.descripcion ||
+        "Este escrito todavía no tiene descripción.";
+
+
+    // =================================
+    // PIE
+    // =================================
+
+    const pie =
+        document.createElement(
+            "div"
+        );
+
+
+    pie.classList.add(
+        "explorar-pie"
+    );
+
+
+    const fecha =
+        document.createElement(
+            "span"
+        );
+
+
+    fecha.textContent =
+        formatearFecha(
+            escrito.fecha_creacion
+        );
+
+
+    const interacciones =
+        document.createElement(
+            "div"
+        );
+
+
+    interacciones.classList.add(
+        "explorar-interacciones"
+    );
+
+
+    const like =
+        document.createElement(
+            "button"
+        );
+
+
+    like.type =
+        "button";
+
+
+    like.classList.add(
+        "btn-like-explorar"
+    );
+
+
+    like.innerHTML =
+    `
+        <span>
+            ${escrito.me_gusta ? "♥" : "♡"}
+        </span>
+
+        <strong>
+            ${escrito.cantidad_likes}
+        </strong>
+    `;
+
+
+    if (
+        escrito.me_gusta
+    ) {
+
+        like.classList.add(
+            "activo"
+        );
+
+    }
+
+
+    // =================================
+    // DAR / QUITAR LIKE
+    // =================================
+
+    like.addEventListener(
+        "click",
+        async function(event) {
+
+            event.stopPropagation();
+
+
+            await alternarLike(
+                escrito,
+                like
+            );
+
+        }
+    );
+
+
+    interacciones.appendChild(
+        like
+    );
+
+    const comentariosInfo =
+        document.createElement(
+            "span"
+        );
+
+
+    comentariosInfo.classList.add(
+        "comentarios-info-explorar"
+    );
+
+
+    comentariosInfo.innerHTML =
+        `
+            <span>
+                💬
+            </span>
+
+            <strong>
+                ${escrito.cantidad_comentarios}
+            </strong>
+        `;
+
+
+    interacciones.appendChild(
+        comentariosInfo
+);
+
+        pie.appendChild(
+            fecha
+        );
+
+
+        pie.appendChild(
+            interacciones
+    );
+
+
+    // =================================
+    // ARMAR TARJETA
+    // =================================
+
+    tarjeta.appendChild(
+        autor
+    );
+
+
+    tarjeta.appendChild(
+        titulo
+    );
+
+
+    tarjeta.appendChild(
+        descripcion
+    );
+
+
+    tarjeta.appendChild(
+        pie
+    );
+
+
+    // =================================
+    // ABRIR ESCRITO
+    // =================================
+
+    tarjeta.addEventListener(
+        "click",
+        async function() {
+
+            await abrirEscritoDesdeExplorar(
+                escrito.share_id
+            );
+
+        }
+    );
+
+
+    listaExplorar.appendChild(
+        tarjeta
+    );
+
+}
+
+//alternar like
+
+async function alternarLike(
+    escrito,
+    boton
+) {
+
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+    if (
+        !sesion
+    ) {
+
+        mostrarLogin();
+
+        return;
+    }
+
+
+    const usuario =
+        sesion.user;
+
+
+    boton.disabled =
+        true;
+
+
+    // =================================
+    // QUITAR LIKE
+    // =================================
+
+    if (
+        escrito.me_gusta
+    ) {
+
+        const resultado =
+            await clienteSupabase
+                .from("likes")
+                .delete()
+                .eq(
+                    "escrito_id",
+                    escrito.id
+                )
+                .eq(
+                    "usuario_id",
+                    usuario.id
+                );
 
 
         if (
             resultado.error
         ) {
 
-return;
+            console.log(
+                "Error al quitar like:",
+                resultado.error
+            );
 
+
+            boton.disabled =
+                false;
+
+
+            return;
         }
 
 
-        usuario.value =
-            "";
+        escrito.me_gusta =
+            false;
 
 
-        contrasena.value =
-            "";
+        escrito.cantidad_likes =
+            Math.max(
+                0,
+                escrito.cantidad_likes - 1
+            );
+
+    }
+
+
+    // =================================
+    // DAR LIKE
+    // =================================
+
+    else {
+
+        const resultado =
+            await clienteSupabase
+                .from("likes")
+                .insert({
+                    escrito_id:
+                        escrito.id,
+
+                    usuario_id:
+                        usuario.id
+                });
+
+
+        if (
+            resultado.error
+        ) {
+
+            console.log(
+                "Error al dar like:",
+                resultado.error
+            );
+
+
+            boton.disabled =
+                false;
+
+
+            return;
+        }
+
+
+        escrito.me_gusta =
+            true;
+
+
+        escrito.cantidad_likes =
+            escrito.cantidad_likes + 1;
+
+    }
+
+
+    actualizarBotonLike(
+        boton,
+        escrito
+    );
+
+
+    boton.disabled =
+        false;
+
+}
+
+//actualizar boton like
+
+function actualizarBotonLike(
+    boton,
+    escrito
+) {
+
+    boton.innerHTML =
+        `
+            <span>
+                ${escrito.me_gusta ? "♥" : "♡"}
+            </span>
+
+            <strong>
+                ${escrito.cantidad_likes}
+            </strong>
+        `;
+
+
+    if (
+        escrito.me_gusta
+    ) {
+
+        boton.classList.add(
+            "activo"
+        );
+
+    }
+
+    else {
+
+        boton.classList.remove(
+            "activo"
+        );
+
+    }
+
+}
+
+//cargar like lectura
+
+async function cargarLikeLectura(
+    escrito
+) {
+
+    escritoLikeLectura =
+        escrito;
+
+
+    seccionInteraccionesLectura.style.display =
+        "flex";
+
+
+    const resultadoLikes =
+        await clienteSupabase
+            .from("likes")
+            .select(
+                "usuario_id"
+            )
+            .eq(
+                "escrito_id",
+                escrito.id
+            );
+
+
+    if (
+        resultadoLikes.error
+    ) {
+
+        console.log(
+            "Error al cargar likes del lector:",
+            resultadoLikes.error
+        );
+
+
+        return;
+    }
+
+
+    const likes =
+        resultadoLikes.data || [];
+
+
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+    const usuario =
+        sesion
+            ? sesion.user
+            : null;
+
+
+    escrito.cantidad_likes =
+        likes.length;
+
+
+    escrito.me_gusta =
+        usuario
+            ? likes.some(
+                function(like) {
+
+                    return (
+                        like.usuario_id ===
+                        usuario.id
+                    );
+
+                }
+            )
+            : false;
+
+
+    actualizarLikeLectura(
+        escrito
+    );
+
+}
+
+//actualizar like lectura
+
+function actualizarLikeLectura(
+    escrito
+) {
+
+    iconoLikeLectura.textContent =
+        escrito.me_gusta
+            ? "♥"
+            : "♡";
+
+
+    contadorLikeLectura.textContent =
+        escrito.cantidad_likes || 0;
+
+
+    if (
+        escrito.me_gusta
+    ) {
+
+        btnLikeLectura.classList.add(
+            "activo"
+        );
+
+    }
+
+    else {
+
+        btnLikeLectura.classList.remove(
+            "activo"
+        );
+
+    }
+
+}
+
+btnLikeLectura.addEventListener(
+    "click",
+    async function() {
+
+        if (
+            !escritoLikeLectura
+        ) {
+
+            return;
+        }
+
+
+        await alternarLike(
+            escritoLikeLectura,
+            btnLikeLectura
+        );
+
+
+        actualizarLikeLectura(
+            escritoLikeLectura
+        );
 
     }
 );
+
+
+//ABRIR ESCRITO DESDE EXPLORAR
+
+async function abrirEscritoDesdeExplorar(
+    shareId
+) {
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+
+    url.searchParams.delete(
+        "autor"
+    );
+
+
+    url.searchParams.set(
+        "escrito",
+        shareId
+    );
+
+
+    window.history.pushState(
+        {},
+        "",
+        url.pathname +
+        url.search
+    );
+
+
+    modoEscritoCompartido =
+        true;
+
+
+    shareIdPendiente =
+        shareId;
+
+    
+    origenLecturaCompartida =
+        "explorar";
+
+    await comprobarEscritoCompartido();
+
+}
+
+//BUSCADOR EN LA PESTAÑA DE EXPLORAR
+
+buscadorExplorar.addEventListener(
+    "input",
+    function() {
+
+        const termino =
+            buscadorExplorar
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        if (
+            termino === ""
+        ) {
+
+            mostrarEscritosExplorar(
+                escritosExplorar
+            );
+
+
+            return;
+        }
+
+
+        const filtrados =
+            escritosExplorar.filter(
+                function(escrito) {
+
+                    const titulo =
+                        (
+                            escrito.titulo ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    const autor =
+                        (
+                            escrito.nombre_autor ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    const username =
+                        (
+                            escrito.username ||
+                            ""
+                        )
+                        .toLowerCase();
+
+
+                    return (
+                        titulo.includes(
+                            termino
+                        ) ||
+                        autor.includes(
+                            termino
+                        ) ||
+                        username.includes(
+                            termino
+                        )
+                    );
+
+                }
+            );
+
+
+        mostrarEscritosExplorar(
+            filtrados
+        );
+
+    }
+);
+
+
+function actualizarXBuscadorExplorar() {
+
+    limpiarBuscadorExplorar.style.display =
+        buscadorExplorar.value.length > 0
+            ? "flex"
+            : "none";
+
+}
+
+
+buscadorExplorar.addEventListener(
+    "input",
+    actualizarXBuscadorExplorar
+);
+
+
+limpiarBuscadorExplorar.addEventListener(
+    "click",
+    function() {
+
+        buscadorExplorar.value =
+            "";
+
+
+        actualizarXBuscadorExplorar();
+
+
+        mostrarEscritosExplorar(
+            escritosExplorar
+        );
+
+
+        buscadorExplorar.focus();
+
+    }
+);
+
+
+//abrir perfil desde explorar
+
+async function abrirPerfilDesdeExplorar(
+    username
+) {
+
+    if (
+        !username
+    ) {
+
+        return;
+    }
+
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+
+    url.searchParams.delete(
+        "escrito"
+    );
+
+
+    url.searchParams.set(
+        "autor",
+        username
+    );
+
+
+    window.history.pushState(
+        {},
+        "",
+        url.pathname +
+        url.search
+    );
+
+
+    await abrirPerfilPublicoDesdeURL(
+        username
+    );
+
+}
+
+//COMENTARIOS TODO
+
+//contador 0 a 300
+
+inputComentario.addEventListener(
+    "input",
+    function() {
+
+        contadorCaracteresComentario.textContent =
+            inputComentario.value.length +
+            " / 300";
+
+    }
+);
+
+//cargar comentarios del escrito
+
+async function cargarComentarios(
+    escrito
+) {
+
+    inputComentario.value =
+        "";
+
+
+    contadorCaracteresComentario.textContent =
+        "0 / 300";
+
+    escritoComentariosActual =
+        escrito;
+
+
+    seccionComentarios.style.display =
+        "block";
+
+
+    listaComentarios.innerHTML =
+        "";
+
+
+    sinComentarios.style.display =
+        "none";
+
+
+    inputComentario.value =
+        "";
+
+
+    contadorCaracteresComentario.textContent =
+        "0 / 300";
+
+
+    // =================================
+    // TRAER COMENTARIOS
+    // =================================
+
+    const resultadoComentarios =
+        await clienteSupabase
+            .from("comentarios")
+            .select(
+                "id, usuario_id, contenido, created_at"
+            )
+            .eq(
+                "escrito_id",
+                escrito.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:
+                        true
+                }
+            );
+
+
+    if (
+        resultadoComentarios.error
+    ) {
+
+        console.log(
+            "Error al cargar comentarios:",
+            resultadoComentarios.error
+        );
+
+
+        sinComentarios.style.display =
+            "block";
+
+
+        sinComentarios.textContent =
+            "No se pudieron cargar los comentarios.";
+
+
+        return;
+    }
+
+
+    const comentarios =
+        resultadoComentarios.data || [];
+
+
+    // =================================
+    // CONTADOR
+    // =================================
+
+    if (
+        comentarios.length === 1
+    ) {
+
+        contadorComentarios.textContent =
+            "1 comentario";
+
+    }
+
+    else {
+
+        contadorComentarios.textContent =
+            comentarios.length +
+            " comentarios";
+
+    }
+
+
+    if (
+        comentarios.length === 0
+    ) {
+
+        sinComentarios.style.display =
+            "block";
+
+
+        sinComentarios.textContent =
+            "Todavía no hay comentarios.";
+
+
+        return;
+    }
+
+
+    // =================================
+    // CARGAR AUTORES
+    // =================================
+
+    const idsUsuarios =
+        [
+            ...new Set(
+                comentarios.map(
+                    function(comentario) {
+
+                        return comentario.usuario_id;
+
+                    }
+                )
+            )
+        ];
+
+
+    const resultadoPerfiles =
+        await clienteSupabase
+            .from("perfiles")
+            .select(
+                "id, nombre_autor, username"
+            )
+            .in(
+                "id",
+                idsUsuarios
+            );
+
+
+    const perfiles =
+        resultadoPerfiles.data || [];
+
+
+    const perfilesPorId =
+        new Map();
+
+
+    perfiles.forEach(
+        function(perfil) {
+
+            perfilesPorId.set(
+                perfil.id,
+                perfil
+            );
+
+        }
+    );
+
+    const resultadoSesion =
+    await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+    const usuarioActual =
+        sesion
+            ? sesion.user
+            : null;
+
+
+    // =================================
+    // MOSTRAR
+    // =================================
+
+    comentarios.forEach(
+        function(comentario) {
+
+            const perfil =
+                perfilesPorId.get(
+                    comentario.usuario_id
+                );
+
+
+            crearComentarioVisual(
+                comentario,
+                perfil,
+                usuarioActual
+            );
+
+        }
+    );
+
+}
+
+//crear cada comentario visualmente
+
+function crearComentarioVisual(
+    comentario,
+    perfil,
+    usuarioActual
+) {
+
+    const item =
+        document.createElement(
+            "article"
+        );
+
+
+    item.classList.add(
+        "comentario-item"
+    );
+
+
+    const cabecera =
+        document.createElement(
+            "div"
+        );
+
+
+    cabecera.classList.add(
+        "comentario-item-cabecera"
+    );
+
+
+    const autor =
+        document.createElement(
+            "span"
+        );
+
+
+    autor.classList.add(
+        "comentario-autor"
+    );
+
+
+    autor.textContent =
+        perfil
+            ? (
+                perfil.nombre_autor ||
+                perfil.username ||
+                "Usuario"
+            )
+            : "Usuario";
+
+
+    cabecera.appendChild(
+        autor
+    );
+
+
+    // =================================
+    // ELIMINAR SOLO SI ES TUYO
+    // =================================
+
+    if (
+        usuarioActual &&
+        usuarioActual.id ===
+            comentario.usuario_id
+    ) {
+
+        const btnEliminar =
+            document.createElement(
+                "button"
+            );
+
+
+        btnEliminar.type =
+            "button";
+
+
+        btnEliminar.classList.add(
+            "btn-eliminar-comentario"
+        );
+
+
+        btnEliminar.textContent =
+            "Eliminar";
+
+
+        btnEliminar.addEventListener(
+            "click",
+            async function() {
+
+                await eliminarComentario(
+                    comentario.id
+                );
+
+            }
+        );
+
+
+        cabecera.appendChild(
+            btnEliminar
+        );
+
+    }
+
+
+    const texto =
+        document.createElement(
+            "p"
+        );
+
+
+    texto.classList.add(
+        "comentario-texto"
+    );
+
+
+    texto.textContent =
+        comentario.contenido;
+
+
+    const fecha =
+        document.createElement(
+            "span"
+        );
+
+
+    fecha.classList.add(
+        "comentario-fecha"
+    );
+
+
+    fecha.textContent =
+        formatearFecha(
+            comentario.created_at
+        );
+
+
+    item.appendChild(
+        cabecera
+    );
+
+
+    item.appendChild(
+        texto
+    );
+
+
+    item.appendChild(
+        fecha
+    );
+
+
+    listaComentarios.appendChild(
+        item
+    );
+
+}
+
+
+
+//primer listener de comentario
+
+//publicar comentario
+
+btnPublicarComentario.addEventListener(
+    "click",
+    async function() {
+
+        await publicarComentario();
+
+    }
+);
+
+//funcion para publicar comentario
+
+async function publicarComentario() {
+
+    
+
+    // =================================
+    // COMPROBAR ESCRITO
+    // =================================
+
+    if (
+        !escritoComentariosActual
+    ) {
+
+        return;
+    }
+
+
+    const contenido =
+        inputComentario.value.trim();
+
+
+    // =================================
+    // COMENTARIO VACÍO
+    // =================================
+
+    if (
+        contenido === ""
+    ) {
+
+        return;
+    }
+
+
+    // =================================
+    // COMPROBAR SESIÓN
+    // =================================
+
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+
+    if (
+        !sesion
+    ) {
+
+        mostrarLogin();
+
+        return;
+    }
+
+
+    const usuario =
+        sesion.user;
+
+
+    // =================================
+    // EVITAR DOBLE CLIC
+    // =================================
+
+    btnPublicarComentario.disabled =
+        true;
+
+
+    btnPublicarComentario.textContent =
+        "Publicando...";
+
+
+    // =================================
+    // GUARDAR EN SUPABASE
+    // =================================
+
+    
+
+    const resultado =
+        await clienteSupabase
+            .from("comentarios")
+            .insert({
+
+                escrito_id:
+                    escritoComentariosActual.id,
+
+                usuario_id:
+                    usuario.id,
+
+                contenido:
+                    contenido
+
+            });
+
+    
+
+
+    if (
+        resultado.error
+    ) {
+
+        console.log(
+            "Error al publicar comentario:",
+            resultado.error
+        );
+
+
+        btnPublicarComentario.disabled =
+            false;
+
+
+        btnPublicarComentario.textContent =
+            "Publicar";
+
+
+        return;
+    }
+
+
+    // =================================
+    // LIMPIAR
+    // =================================
+
+    
+
+
+    btnPublicarComentario.disabled =
+        false;
+
+
+    btnPublicarComentario.textContent =
+        "Publicar";
+
+
+    // =================================
+    // RECARGAR COMENTARIOS
+    // =================================
+
+    
+
+    await cargarComentarios(
+        escritoComentariosActual
+    );
+
+    
+
+}
+
+//funcion que borra tu comentario
+
+async function eliminarComentario(
+    comentarioId
+) {
+
+    const confirmar =
+        await mostrarPopup(
+            "Eliminar comentario",
+            "¿Seguro que quieres eliminar este comentario?",
+            "Eliminar",
+            "Cancelar",
+            "🗑"
+        );
+
+
+    if (
+        !confirmar
+    ) {
+
+        return;
+    }
+
+
+    const resultado =
+        await clienteSupabase
+            .from("comentarios")
+            .delete()
+            .eq(
+                "id",
+                comentarioId
+            );
+
+
+    if (
+        resultado.error
+    ) {
+
+        console.log(
+            "Error al eliminar comentario:",
+            resultado.error
+        );
+
+
+        await mostrarAviso(
+            "No se pudo eliminar el comentario.",
+            "Error",
+            "⚠️"
+        );
+
+
+        return;
+    }
+
+
+    await cargarComentarios(
+        escritoComentariosActual
+    );
+
+}
 
 
 // =================================
@@ -8275,12 +10557,23 @@ function leerEscrito(
     escrito
 ) {
 
+
     // =================================
     // LECTURA PERSONAL
     // =================================
 
+    seccionComentarios.style.display =
+        "none";
+
+
+    escritoComentariosActual =
+        null;
+
     seccionAutorLectura.style.display =
         "none";
+
+    escritoLikeLectura =
+        "null";
 
 
     autorCompartido.style.display =
@@ -8804,6 +11097,33 @@ buscador.addEventListener(
 
         mostrarEscritos();
 
+
+        limpiarBuscador.style.display =
+            buscador.value.length > 0
+                ? "flex"
+                : "none";
+
+    }
+);
+
+
+limpiarBuscador.addEventListener(
+    "click",
+    function() {
+
+        buscador.value =
+            "";
+
+
+        limpiarBuscador.style.display =
+            "none";
+
+
+        mostrarEscritos();
+
+
+        buscador.focus();
+
     }
 );
 
@@ -8885,62 +11205,138 @@ async function cerrarModalLectura() {
 
 
     // =================================
-    // SI ES ENLACE COMPARTIDO
+    // NO ES COMPARTIDO
     // =================================
 
     if (
-        modoEscritoCompartido
+        !modoEscritoCompartido
     ) {
 
-        const url =
-            new URL(
-                window.location.href
-            );
+        return;
+    }
 
 
-        url.searchParams.delete(
-            "escrito"
+    const origenAnterior =
+        origenLecturaCompartida;
+
+
+    const url =
+        new URL(
+            window.location.href
         );
 
 
-        window.history.replaceState(
-            {},
-            "",
-            url.pathname +
-            url.search +
-            url.hash
-        );
+    url.searchParams.delete(
+        "escrito"
+    );
 
 
-        modoEscritoCompartido =
-            false;
+    window.history.replaceState(
+        {},
+        "",
+        url.pathname +
+        url.search +
+        url.hash
+    );
 
 
-        shareIdPendiente =
-            null;
+    modoEscritoCompartido =
+        false;
 
 
-        const resultadoSesion =
-            await clienteSupabase.auth.getSession();
+    shareIdPendiente =
+        null;
 
 
-        const sesion =
-            resultadoSesion.data.session;
+    // =================================
+    // VENÍA DE EXPLORAR
+    // =================================
+
+    if (
+        origenAnterior ===
+        "explorar"
+    ) {
+
+        origenLecturaCompartida =
+            "enlace";
+
+
+        await mostrarExplorar();
+
+
+        return;
+    }
+
+
+    // =================================
+    // VENÍA DE UN PERFIL
+    // =================================
+
+    if (
+        origenAnterior ===
+        "perfil"
+    ) {
+
+        origenLecturaCompartida =
+            "enlace";
 
 
         if (
-            sesion
+            autorActualUsername
         ) {
 
-            await mostrarPortafolio();
+            url.searchParams.set(
+                "autor",
+                autorActualUsername
+            );
+
+
+            window.history.replaceState(
+                {},
+                "",
+                url.pathname +
+                url.search
+            );
+
+
+            await abrirPerfilPublicoDesdeURL(
+                autorActualUsername
+            );
 
         }
 
-        else {
 
-            mostrarLogin();
+        return;
+    }
 
-        }
+
+    // =================================
+    // VENÍA DE UN LINK DIRECTO
+    // =================================
+
+    origenLecturaCompartida =
+        "enlace";
+
+
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+    if (
+        sesion
+    ) {
+
+        await mostrarPortafolio();
+
+    }
+
+    else {
+
+        mostrarInicioPublico();
 
     }
 
@@ -9973,6 +12369,320 @@ btnCopiarMiPerfil.addEventListener(
             },
             1500
         );
+
+    }
+);
+
+async function actualizarCuentaInicio() {
+
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+    // =================================
+    // SIN SESIÓN
+    // =================================
+
+    if (
+        !sesion
+    ) {
+
+        btnInicioLogin.style.display =
+            "block";
+
+
+        cuentaInicio.style.display =
+            "none";
+
+
+        return;
+    }
+
+
+    // =================================
+    // CON SESIÓN
+    // =================================
+
+    btnInicioLogin.style.display =
+        "none";
+
+
+    cuentaInicio.style.display =
+        "block";
+
+
+    const resultadoPerfil =
+        await clienteSupabase
+            .from("perfiles")
+            .select(
+                "nombre_autor, username"
+            )
+            .eq(
+                "id",
+                sesion.user.id
+            )
+            .maybeSingle();
+
+
+    const perfil =
+        resultadoPerfil.data;
+
+
+    let nombre =
+        "Usuario";
+
+
+    if (
+        perfil
+    ) {
+
+        nombre =
+            perfil.nombre_autor ||
+            perfil.username ||
+            "Usuario";
+
+    }
+
+
+    nombreCuentaInicio.textContent =
+        "Hola, " + nombre;
+
+}
+
+btnCuentaInicio.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        cuentaInicio.classList.toggle(
+            "abierto"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        cuentaInicio.classList.remove(
+            "abierto"
+        );
+
+        cuentaExplorar.classList.remove(
+            "abierto"
+        );
+
+    }
+);
+
+btnMenuMiCuenta.addEventListener(
+    "click",
+    async function() {
+
+        cuentaInicio.classList.remove(
+            "abierto"
+        );
+
+
+        await mostrarPortafolio();
+
+
+        btnMiCuenta.click();
+
+    }
+);
+
+btnMenuCerrarSesion.addEventListener(
+    "click",
+    function() {
+
+        cuentaInicio.classList.remove(
+            "abierto"
+        );
+
+
+        cerrarSesion();
+
+    }
+);
+
+async function obtenerNombreUsuarioActual() {
+
+    const resultadoSesion =
+        await clienteSupabase.auth.getSession();
+
+
+    const sesion =
+        resultadoSesion.data.session;
+
+
+    if (
+        !sesion
+    ) {
+
+        return null;
+    }
+
+
+    const resultadoPerfil =
+        await clienteSupabase
+            .from("perfiles")
+            .select(
+                "nombre_autor, username"
+            )
+            .eq(
+                "id",
+                sesion.user.id
+            )
+            .maybeSingle();
+
+
+    const perfil =
+        resultadoPerfil.data;
+
+
+    if (
+        perfil
+    ) {
+
+        return (
+            perfil.nombre_autor ||
+            perfil.username ||
+            "Usuario"
+        );
+
+    }
+
+
+    return "Usuario";
+
+}
+
+async function actualizarCuentaExplorar() {
+
+    const nombre =
+        await obtenerNombreUsuarioActual();
+
+
+    if (
+        !nombre
+    ) {
+
+        btnExplorarLogin.style.display =
+            "block";
+
+
+        cuentaExplorar.style.display =
+            "none";
+
+
+        return;
+    }
+
+
+    btnExplorarLogin.style.display =
+        "none";
+
+
+    cuentaExplorar.style.display =
+        "block";
+
+
+    nombreCuentaExplorar.textContent =
+        "Hola, " + nombre;
+
+}
+
+
+btnCuentaExplorar.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        cuentaExplorar.classList.toggle(
+            "abierto"
+        );
+
+    }
+);
+
+btnMenuMiCuentaExplorar.addEventListener(
+    "click",
+    async function() {
+
+        cuentaExplorar.classList.remove(
+            "abierto"
+        );
+
+
+        await mostrarPortafolio();
+
+
+        btnMiCuenta.click();
+
+    }
+);
+
+btnMenuCerrarSesionExplorar.addEventListener(
+    "click",
+    async function() {
+
+        cuentaExplorar.classList.remove(
+            "abierto"
+        );
+
+
+        await cerrarSesion();
+
+    }
+);
+
+btnIrExplorar.addEventListener(
+    "click",
+    async function() {
+
+        await mostrarExplorar();
+
+    }
+);
+
+btnCerrarSesionCuenta.addEventListener(
+    "click",
+    async function() {
+
+        modalCuenta.style.display =
+            "none";
+
+
+        await cerrarSesion();
+
+    }
+);
+
+btnExplorarVolverInicio.addEventListener(
+    "click",
+    async function() {
+
+        await mostrarInicioPublico();
+
+    }
+);
+
+btnLoginVolverInicio.addEventListener(
+    "click",
+    async function() {
+
+        await mostrarInicioPublico();
 
     }
 );
