@@ -512,7 +512,7 @@
 
 <section id="pantalla-login">
 
-    <div class="login-contenido">
+        <div class="login-contenido">
 
         <button
             id="btn-login-volver-inicio"
@@ -520,144 +520,58 @@
             type="button"
         >
             ← Volver al inicio
-    </button>
-
-        <h1>Mis Escritos</h1>
-
-        <p id="texto-login">
-            Entra a tu portafolio
-        </p>
+        </button>
 
 
-        <!-- LOGIN -->
+        <div class="login-marca">
 
-        <form id="form-login">
-
-            <div class="campo-login">
-
-                <label for="usuario">
-                    Correo electrónico
-                </label>
-
-                <input
-                    type="email"
-                    id="usuario"
-                    placeholder="tucorreo@email.com"
-                    required
-                >
-
-            </div>
-
-
-            <div class="campo-login">
-
-                <label for="contrasena">
-                    Contraseña
-                </label>
-
-                <input
-                    type="password"
-                    id="contrasena"
-                    placeholder="Tu contraseña"
-                    required
-                >
-
-            </div>
-
-
-            <button
-                type="submit"
-                id="btn-login"
+            <img
+                src="VersoLibre.png"
+                alt="VersoLibre"
+                class="login-logo"
             >
-                Iniciar sesión
-            </button>
 
-
-            <p id="mensaje-login"></p>
-
-        </form>
-
-
-        <!-- REGISTRO -->
-
-        <div id="registro-login">
-
-            <p>
-                ¿No tienes una cuenta?
-            </p>
-
-            <button
-                type="button"
-                id="btn-mostrar-registro"
-            >
-                Crear cuenta
-            </button>
+            <span>
+                VersoLibre
+            </span>
 
         </div>
 
 
-        <!-- FORMULARIO DE REGISTRO -->
+        <h1>
+            Bienvenido a tu espacio.
+        </h1>
 
-        <form
-            id="form-registro"
-            style="display: none;"
+
+        <p class="login-descripcion">
+            Escribe, guarda y comparte tus textos
+            en un lugar hecho para autores.
+        </p>
+
+
+        <button
+            id="btn-login-google"
+            class="btn-login-google"
+            type="button"
         >
 
-            <div class="campo-login">
+            <span class="google-icono">
+                G
+            </span>
 
-                <label for="registro-email">
-                    Correo electrónico
-                </label>
+            Continuar con Google
 
-                <input
-                    type="email"
-                    id="registro-email"
-                    placeholder="tucorreo@email.com"
-                    required
-                >
-
-            </div>
+        </button>
 
 
-            <div class="campo-login">
-
-                <label for="registro-contrasena">
-                    Contraseña
-                </label>
-
-                <input
-                    type="password"
-                    id="registro-contrasena"
-                    placeholder="Crea una contraseña"
-                    required
-                >
-
-            </div>
-
-
-            <button
-                type="submit"
-                id="btn-registro"
-            >
-                Crear cuenta
-            </button>
-
-
-            <p id="mensaje-registro"></p>
-
-
-            <button
-                type="button"
-                id="btn-volver-login"
-            >
-                Ya tengo una cuenta
-            </button>
-
-        </form>
+        <p class="acceso-google-ayuda">
+            Al continuar podrás iniciar sesión o crear
+            una cuenta nueva automáticamente.
+        </p>
 
     </div>
 
-</section>
+    </section>
 
 
 
