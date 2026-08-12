@@ -18,6 +18,493 @@
 
 <body>
 
+    <!-- ========================= -->
+<!-- INICIO PÚBLICO -->
+<!-- ========================= -->
+
+<section
+    id="pantalla-inicio"
+    class="pantalla-inicio"
+>
+
+    <!-- ========================= -->
+    <!-- NAVEGACIÓN -->
+    <!-- ========================= -->
+
+    <header class="inicio-header">
+
+        <div class="inicio-nav">
+
+            <div class="inicio-marca">
+
+                <img
+                    src="VersoLibre.png"
+                    alt="VersoLibre"
+                    class="inicio-logo"
+                >
+
+                <span>
+                    VersoLibre
+                </span>
+
+            </div>
+
+
+            <nav class="inicio-navegacion">
+
+
+                <button
+                    id="btn-inicio-escritorio"
+                    type="button"
+                    class="btn-nav-publico"
+                >
+                    Mi escritorio
+                </button>
+
+                <button
+                    id="btn-inicio-explorar"
+                    type="button"
+                    class="btn-nav-publico"
+                >
+                    Explorar
+                </button>
+
+
+                <button
+                    id="btn-inicio-login"
+                    type="button"
+                    class="btn-inicio-sesion"
+                >
+                    Iniciar sesión
+                </button>
+
+                <!-- CUENTA CON SESIÓN -->
+
+                <div
+                    id="cuenta-inicio"
+                    class="cuenta-nav"
+                    style="display: none;"
+                >
+
+                    <button
+                        id="btn-cuenta-inicio"
+                        class="btn-cuenta-nav"
+                        type="button"
+                    >
+                        <span id="nombre-cuenta-inicio">
+                            Hola
+                        </span>
+
+                        <span class="flecha-cuenta">
+                            ▾
+                        </span>
+                    </button>
+
+
+                    <div
+                        id="menu-cuenta-inicio"
+                        class="menu-cuenta-nav"
+                    >
+
+                        <button
+                            id="btn-menu-mi-cuenta"
+                            type="button"
+                        >
+                             Mi cuenta
+                        </button>
+
+
+                        <div class="menu-cuenta-linea">
+                        </div>
+
+
+                        <button
+                            id="btn-menu-cerrar-sesion"
+                            type="button"
+                            class="menu-cerrar-sesion"
+                        >
+                            Cerrar Sesión
+                        </button>
+
+                    </div>
+
+</div>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- PRESENTACIÓN -->
+    <!-- ========================= -->
+
+    <main class="inicio-contenido">
+
+        <section class="inicio-hero">
+
+            <span class="inicio-etiqueta">
+                Escribe. Guarda. Comparte.
+            </span>
+
+
+            <h1>
+                Un espacio para todo
+                lo que quieres escribir.
+            </h1>
+
+
+            <p>
+                Crea tu propio rincón de escritura,
+                guarda tus textos y descubre lo que
+                otros autores deciden compartir.
+            </p>
+
+
+            <div class="inicio-acciones">
+
+                <button
+                    id="btn-inicio-empezar"
+                    type="button"
+                    class="btn-inicio-principal"
+                >
+                    ✍️ Comenzar a escribir
+                </button>
+
+
+                <button
+                    id="btn-inicio-ver-explorar"
+                    type="button"
+                    class="btn-inicio-secundario"
+                >
+                    Explorar escritos
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- VISTA PREVIA -->
+        <!-- ========================= -->
+
+        <section class="inicio-preview">
+
+            <div class="inicio-preview-cabecera">
+
+                <div>
+
+                    <span class="inicio-etiqueta">
+                        Descubre
+                    </span>
+
+                    <h2>
+                        Escritos de la comunidad
+                    </h2>
+
+                </div>
+
+
+                <span class="inicio-preview-aviso">
+                    Próximamente
+                </span>
+
+            </div>
+
+
+            <div class="inicio-preview-grid">
+
+                <article class="inicio-preview-tarjeta">
+
+                    <span class="preview-autor">
+                        VersoLibre
+                    </span>
+
+                    <h3>
+                        Historias, poemas y pensamientos
+                    </h3>
+
+                    <p>
+                        Aquí podrás descubrir textos
+                        públicos compartidos por otros
+                        autores de VersoLibre.
+                    </p>
+
+                </article>
+
+
+                <article class="inicio-preview-tarjeta">
+
+                    <span class="preview-autor">
+                        Tu espacio
+                    </span>
+
+                    <h3>
+                        Publica cuando tú quieras
+                    </h3>
+
+                    <p>
+                        Tú decides qué escritos permanecen
+                        privados y cuáles quieres mostrar
+                        a los demás.
+                    </p>
+
+                </article>
+
+
+                <article class="inicio-preview-tarjeta">
+
+                    <span class="preview-autor">
+                        Comunidad
+                    </span>
+
+                    <h3>
+                        Lee y descubre nuevas voces
+                    </h3>
+
+                    <p>
+                        Explora autores y escritos desde
+                        una misma sección de VersoLibre.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</section>
+
+<!-- ========================= -->
+<!-- EXPLORAR -->
+<!-- ========================= -->
+
+<section
+    id="pantalla-explorar"
+    class="pantalla-explorar"
+    style="display: none;"
+>
+
+    <!-- ========================= -->
+    <!-- HEADER -->
+    <!-- ========================= -->
+
+    <header class="explorar-header">
+
+        <div class="explorar-nav">
+
+            <button
+                id="btn-explorar-inicio"
+                class="explorar-marca"
+                type="button"
+            >
+
+                <img
+                    src="VersoLibre.png"
+                    alt="VersoLibre"
+                >
+
+                <span>
+                    VersoLibre
+                </span>
+
+            </button>
+
+
+            <div class="explorar-nav-acciones">
+
+                <button
+                    id="btn-explorar-volver-inicio"
+                    type="button"
+                    class="btn-nav-publico"
+                >
+                    Inicio
+            </button>
+
+                <button
+                    id="btn-explorar-escritorio"
+                    type="button"
+                    class="btn-nav-publico"
+                >
+                    Mi escritorio
+                </button>
+
+
+                <button
+                    id="btn-explorar-login"
+                    type="button"
+                    class="btn-inicio-sesion"
+                >
+                    Iniciar sesión
+                </button>
+
+            
+
+<div
+                id="cuenta-explorar"
+                class="cuenta-nav"
+                style="display: none;"
+            >
+
+                <button
+                    id="btn-cuenta-explorar"
+                    class="btn-cuenta-nav"
+                    type="button"
+                >
+                    <span id="nombre-cuenta-explorar">
+                        Hola
+                    </span>
+
+                    <span class="flecha-cuenta">
+                        ▾
+                    </span>
+                </button>
+
+
+                <div
+                    id="menu-cuenta-explorar"
+                    class="menu-cuenta-nav"
+                >
+
+                    <button
+                        id="btn-menu-mi-cuenta-explorar"
+                        type="button"
+                    >
+                         Mi cuenta
+                    </button>
+
+
+                    <div class="menu-cuenta-linea">
+                    </div>
+
+
+                    <button
+                        id="btn-menu-cerrar-sesion-explorar"
+                        type="button"
+                        class="menu-cerrar-sesion"
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+
+            </div>
+
+</div>
+
+                
+
+        </div>
+
+        
+
+
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="explorar-contenido">
+
+        <section class="explorar-cabecera">
+
+            <span class="inicio-etiqueta">
+                Comunidad
+            </span>
+
+            <h1>
+                Explorar escritos
+            </h1>
+
+            <p>
+                Descubre textos que otros autores
+                han decidido compartir públicamente.
+            </p>
+
+
+            <div class="explorar-buscador">
+
+                <input
+                    type="text"
+                    id="buscador-explorar"
+                    placeholder="Buscar por título o autor..."
+                >
+
+                <button
+                    id="limpiar-buscador-explorar"
+                    class="btn-limpiar-buscador btn-limpiar-buscador-explorar"
+                    type="button"
+                    aria-label="Limpiar búsqueda"
+                    title="Limpiar búsqueda"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- ESTADO CARGANDO -->
+        <!-- ========================= -->
+
+        <div
+            id="explorar-cargando"
+            class="explorar-estado"
+        >
+            Cargando escritos...
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- GRID -->
+        <!-- ========================= -->
+
+        <section
+            id="lista-explorar"
+            class="lista-explorar"
+        >
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- VACÍO -->
+        <!-- ========================= -->
+
+        <div
+            id="explorar-vacio"
+            class="explorar-estado"
+            style="display: none;"
+        >
+
+            <span>
+                📖
+            </span>
+
+            <h3>
+                Todavía no hay escritos públicos
+            </h3>
+
+            <p>
+                Cuando los autores publiquen textos,
+                aparecerán aquí.
+            </p>
+
+        </div>
+
+    </main>
+
+</section>
+
 <!-- ========================= -->
 <!-- PANTALLA DE LOGIN -->
 <!-- ========================= -->
@@ -26,6 +513,14 @@
 <section id="pantalla-login">
 
     <div class="login-contenido">
+
+        <button
+            id="btn-login-volver-inicio"
+            class="btn-login-volver-inicio"
+            type="button"
+        >
+            ← Volver al inicio
+    </button>
 
         <h1>Mis Escritos</h1>
 
@@ -221,22 +716,42 @@
                         placeholder="Buscar un escrito..."
                     >
 
+                    <button
+                        id="limpiar-buscador"
+                        class="btn-limpiar-buscador"
+                        type="button"
+                        aria-label="Limpiar búsqueda"
+                        title="Limpiar búsqueda"
+                    >
+                        &times;
+                    </button>
+
                 </div>
+
+                <button
+                    id="btn-volver-inicio"
+                    class="btn-volver-inicio"
+                    type="button"
+                >
+                    Inicio
+                </button>
+
+
+
+                <button
+                    id="btn-ir-explorar"
+                    class="btn-ir-explorar"
+                    type="button"
+                >
+                    Explorar
+                </button>
 
                 <button
                     id="btn-mi-cuenta"
                     class="btn-mi-cuenta"
                     type="button"
                 >
-                    👤 Mi cuenta
-                </button>
-
-
-                <button
-                    id="btn-cerrar-sesion"
-                    class="btn-cerrar-sesion"
-                >
-                    Cerrar sesión
+                     Mi cuenta
                 </button>
 
                 
@@ -561,6 +1076,124 @@
             </div>
 
         </section>
+
+
+
+        <!-- ========================= -->
+        <!-- INTERACCIONES -->
+        <!-- ========================= -->
+
+        <section
+            id="seccion-interacciones-lectura"
+            class="lectura-interacciones"
+            style="display: none;"
+        >
+
+            <button
+                id="btn-like-lectura"
+                class="btn-like-lectura"
+                type="button"
+            >
+                <span id="icono-like-lectura">
+                    ♡
+                </span>
+
+                <span id="contador-like-lectura">
+                    0
+                </span>
+            </button>
+
+        </section>
+
+        <!-- ========================= -->
+    <!-- COMENTARIOS -->
+    <!-- ========================= -->
+
+    <section
+        id="seccion-comentarios"
+        class="seccion-comentarios"
+        style="display: none;"
+    >
+
+        <div class="comentarios-cabecera">
+
+            <div>
+
+                <span class="lectura-etiqueta">
+                    Arroja una idea!
+                </span>
+
+                <h3 id="titulo-comentarios">
+                    Comentarios
+                </h3>
+
+            </div>
+
+
+            <span
+                id="contador-comentarios"
+                class="contador-comentarios"
+            >
+                0 comentarios
+            </span>
+
+        </div>
+
+
+        <!-- LISTA -->
+
+        <div
+            id="lista-comentarios"
+            class="lista-comentarios"
+        >
+        </div>
+
+
+        <!-- ESTADO VACÍO -->
+
+        <div
+            id="sin-comentarios"
+            class="sin-comentarios"
+        >
+            Todavía no hay comentarios.
+        </div>
+
+
+        <!-- FORMULARIO -->
+
+        <div
+            id="formulario-comentario"
+            class="formulario-comentario"
+        >
+
+            <textarea
+                id="input-comentario"
+                maxlength="300"
+                placeholder="Escribe un comentario..."
+            ></textarea>
+
+
+            <div class="comentario-pie">
+
+                <span
+                    id="contador-caracteres-comentario"
+                >
+                    0 / 300
+                </span>
+
+
+                <button
+                    id="btn-publicar-comentario"
+                    type="button"
+                >
+                    Publicar
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
 
     </div>
 
@@ -959,6 +1592,14 @@
 
 
         <button
+            id="btn-cerrar-sesion-cuenta"
+            class="btn-cerrar-sesion-cuenta"
+            type="button"
+        >
+            Cerrar sesión
+        </button>
+
+        <button
             id="btn-eliminar-cuenta"
             class="btn-eliminar-cuenta"
             type="button"
@@ -1038,8 +1679,7 @@
         >
             Cambiar contraseña
         </button>
-
-    </div>
+</div>
 
 </div>
 
