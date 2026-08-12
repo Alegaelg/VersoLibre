@@ -6648,6 +6648,10 @@ async function comprobarSesion() {
         resultado.data.session;
 
 
+    // =================================
+    // ESCRITO COMPARTIDO ACTIVO
+    // =================================
+
     if (
         modoEscritoCompartido
     ) {
@@ -6657,13 +6661,82 @@ async function comprobarSesion() {
     }
 
 
+    // =================================
+    // SESIÓN ACTIVA
+    // =================================
+
     if (
         sesion
     ) {
 
+        const escritoPendienteLogin =
+            sessionStorage.getItem(
+                "escritoPendienteLogin"
+            );
+
+
+        // =================================
+        // VOLVER A ESCRITO PRIVADO
+        // DESPUÉS DEL LOGIN CON GOOGLE
+        // =================================
+
+        if (
+            escritoPendienteLogin
+        ) {
+
+            sessionStorage.removeItem(
+                "escritoPendienteLogin"
+            );
+
+
+            const url =
+                new URL(
+                    window.location.href
+                );
+
+
+            url.searchParams.set(
+                "escrito",
+                escritoPendienteLogin
+            );
+
+
+            window.history.replaceState(
+                {},
+                "",
+                url.pathname +
+                url.search
+            );
+
+
+            modoEscritoCompartido =
+                true;
+
+
+            shareIdPendiente =
+                escritoPendienteLogin;
+
+
+            await comprobarEscritoCompartido();
+
+
+            return;
+
+        }
+
+
+        // =================================
+        // SESIÓN NORMAL
+        // =================================
+
         await mostrarPortafolio();
 
     }
+
+
+    // =================================
+    // SIN SESIÓN
+    // =================================
 
     else {
 
@@ -6673,7 +6746,6 @@ async function comprobarSesion() {
 
 }
 
-
 // =================================
 // CAMBIOS DE SESIÓN
 // =================================
@@ -6681,40 +6753,109 @@ async function comprobarSesion() {
 clienteSupabase.auth.onAuthStateChange(
     async function(evento, sesion) {
 
-    // =================================
-    // ESCRITO COMPARTIDO
-    // =================================
-
-    if (
-        modoEscritoCompartido
-    ) {
+        // =================================
+        // ESCRITO COMPARTIDO ACTIVO
+        // =================================
 
         if (
-            sesion &&
-            shareIdPendiente
+            modoEscritoCompartido
         ) {
 
-            await comprobarEscritoCompartido();
+            if (
+                sesion &&
+                shareIdPendiente
+            ) {
+
+                await comprobarEscritoCompartido();
+
+            }
+
+
+            return;
 
         }
 
 
-        return;
-    }
-
-
         // =================================
-        // PÁGINA NORMAL
+        // SESIÓN INICIADA
         // =================================
-        // No cambiamos de vista por TOKEN_REFRESHED,
-        // INITIAL_SESSION o al volver a la pestaña.
-        // Así Explorar permanece abierto.
 
         if (
-            evento === "SIGNED_OUT"
+            sesion
         ) {
 
-            await mostrarInicioPublico();
+            const escritoPendienteLogin =
+                sessionStorage.getItem(
+                    "escritoPendienteLogin"
+                );
+
+
+            // =================================
+            // VOLVER AL ESCRITO PRIVADO
+            // DESPUÉS DE GOOGLE
+            // =================================
+
+            if (
+                escritoPendienteLogin
+            ) {
+
+                sessionStorage.removeItem(
+                    "escritoPendienteLogin"
+                );
+
+
+                const url =
+                    new URL(
+                        window.location.href
+                    );
+
+
+                url.searchParams.set(
+                    "escrito",
+                    escritoPendienteLogin
+                );
+
+
+                window.history.replaceState(
+                    {},
+                    "",
+                    url.pathname +
+                    url.search
+                );
+
+
+                modoEscritoCompartido =
+                    true;
+
+
+                shareIdPendiente =
+                    escritoPendienteLogin;
+
+
+                await comprobarEscritoCompartido();
+
+
+                return;
+
+            }
+
+
+            // =================================
+            // SESIÓN NORMAL
+            // =================================
+
+            await mostrarPortafolio();
+
+        }
+
+
+        // =================================
+        // SESIÓN CERRADA
+        // =================================
+
+        else {
+
+            mostrarInicioPublico();
 
         }
 
@@ -12401,22 +12542,53 @@ btnLoginGoogle.addEventListener(
     "click",
     async function() {
 
+        const shareId =
+            obtenerShareIdDeURL();
+
+
+        let redirectDestino =
+            "https://alegaelg.github.io/VersoLibre/";
+
+
+        // =================================
+        // SI VENIMOS DE UN ESCRITO
+        // COMPARTIDO, CONSERVAR EL LINK
+        // =================================
+
+        if (
+            shareId
+        ) {
+
+            redirectDestino =
+                "https://alegaelg.github.io/VersoLibre/" +
+                "?escrito=" +
+                encodeURIComponent(
+                    shareId
+                );
+
+        }
+
+
         const resultado =
             await clienteSupabase.auth.signInWithOAuth({
+
                 provider:
                     "google",
 
                 options: {
 
                     redirectTo:
-                        "https://alegaelg.github.io/VersoLibre/",
+                        redirectDestino,
 
                     queryParams: {
+
                         prompt:
                             "select_account"
+
                     }
 
                 }
+
             });
 
 
